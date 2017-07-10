@@ -47,6 +47,69 @@ Being able to swap the hashing algorithm (in case of hashing algorithms becoming
 
 ## example(s)
 
+putting a document on the blockchain
+```java
+	// define a multichain instance
+	IBlockChain mc = new MultiChain()
+						.setHost("http://127.0.0.1")
+						.setPort(4352)
+						.setUsername("multichainrpc")
+						.setPassword("BHcXLKwR218R883P6pjiWdBffdMx398im4R8BEwfAxMm")
+						.setChainName("chain1")
+						.setStream("stream1");
+
+	// provide the details about signing and hashing
+	AbstractExternalSignature sgn = new DefaultExternalSignature(new File("C:\\Users\\Joris Schellekens\\Downloads\\ks"), "demo", "password");
+
+	// file being handled
+	File inputFile = new File("C:\\Users\\Joris Schellekens\\Desktop\\pdfs\\30_marked.pdf");
+
+	// instantiate chain
+	PdfChain chain = new PdfChain(mc, sgn);
+	
+	chain.put(inputFile);
+```
+
+retrieving document information from the blockchain
+```java
+	IBlockChain mc = new MultiChain()
+						.setHost("http://127.0.0.1")
+						.setPort(4352)
+						.setUsername("multichainrpc")
+						.setPassword("BHcXLKwR218R883P6pjiWdBffdMx398im4R8BEwfAxMm")
+						.setChainName("chain1")
+						.setStream("stream1");
+
+	AbstractExternalSignature sgn = new DefaultExternalSignature(new File("C:\\Users\\Joris Schellekens\\Downloads\\ks"), "demo", "password");
+
+	File inputFile = new File("C:\\Users\\Joris Schellekens\\Desktop\\pdfs\\30_marked.pdf");
+
+	PdfChain chain = new PdfChain(mc, sgn);
+	for (Map<String, Object> docEntry : chain.get(inputFile)) {
+		for (Map.Entry<String, Object> entry : docEntry.entrySet())
+			System.out.println(padRight(entry.getKey(), 32) + " : " + entry.getValue());
+		System.out.println("");
+	}
+```
+
+This yields following example output:
+```java
+blocktime                        : 1499691151
+id2                              : �Ʊ��B�}ә`�-o�R
+id1                              : z�L{�Wd=����G�
+publishers                       : [14pwDpkcfRvSiw6DJWpP7RdcYgv5NfRRn6Dudr]
+txid                             : b0092d7eb967ac2e45671742ddf1a0a96bc049a4bbfe3528888b6d9ff396b7a2
+hsh                              : ��B�����șo�$'�A�d��L���xR�U
+confirmations                    : 22
+key                              : ï¿½ï¿½Bï¿½ï¿½ï¿½ï¿½ï¿½È oï¿½$'ï¿½Aï¿½dï¿½ï¿½Lï¿½ï¿½ï¿½xRï¿½U
+shsh                             : <garbled>
+```
+
+
+verifying a signature
+```java
+```
+
 ## how can you extend upon it?
 
 ## conclusion
