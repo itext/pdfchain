@@ -112,6 +112,10 @@ verifying a signature
 
 ## how can you extend upon it?
 
+There are two important ways in which you can contribute to or extend this component:
+ - implement IBlockChain for some other blockchain provider (e.g. HyperLedger)
+ - implement another signing/hashing algorithm combination (current default is RSA / SHA-256)
+
 ## conclusion
 
 learn more at itextpdf.com
