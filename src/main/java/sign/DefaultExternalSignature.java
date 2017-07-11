@@ -1,9 +1,6 @@
 package sign;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.security.*;
 import java.security.cert.CertificateException;
 
@@ -16,12 +13,12 @@ public class DefaultExternalSignature extends AbstractExternalSignature {
     private String alias;
     private String password;
 
-    public DefaultExternalSignature(File keystoreFile, String alias, String password) {
+    public DefaultExternalSignature(InputStream keystoreFile, String alias, String password) {
         this.alias = alias;
         this.password = password;
         try {
             ks = KeyStore.getInstance(KeyStore.getDefaultType());
-            ks.load(new FileInputStream(keystoreFile), password.toCharArray());
+            ks.load(keystoreFile, password.toCharArray());
         } catch (KeyStoreException e) {
             e.printStackTrace();
         } catch (CertificateException e) {

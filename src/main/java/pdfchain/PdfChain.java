@@ -60,6 +60,18 @@ public class PdfChain {
     }
 
     /**
+     * Puts a pdfFile on the blockchain
+     *
+     * @param pdfFile the pdf file to be put on the blockchain
+     * @return true iff the data was successfully put on the blockchain
+     * @throws IOException
+     * @throws GeneralSecurityException
+     */
+    public boolean put(InputStream pdfFile) throws IOException, GeneralSecurityException {
+        return put(pdfFile, new HashMap<String, String>());
+    }
+
+    /**
      * Get all information related to a specific PDF File from the blockchain
      *
      * @param pdfFile
