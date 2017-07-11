@@ -5,6 +5,7 @@ import blockchain.IBlockChain;
 import blockchain.MultiChain;
 import blockchain.Record;
 import bql.AbstractBQLOperator;
+import bql.executor.BQLCompiler;
 import bql.executor.Executor;
 import bql.logical.And;
 import bql.logical.Or;
@@ -34,7 +35,7 @@ public class BQLFunctionalityTest {
     public static void beforeClass() {}
 
     @Test
-    public void queryBlockChainTest() throws IOException, GeneralSecurityException {
+    public void queryBlockChainTestA() throws IOException, GeneralSecurityException {
         IBlockChain mc = new MultiChain(
                 "http://127.0.0.1",
                 4352,
@@ -62,5 +63,26 @@ public class BQLFunctionalityTest {
         // execute query
         boolean isEmpty = exe.execute(op).isEmpty();
         Assert.assertFalse(isEmpty);
+    }
+
+    @Test
+    public void queryBlockChainTestB() throws IOException, GeneralSecurityException {
+        IBlockChain mc = new MultiChain(
+                "http://127.0.0.1",
+                4352,
+                "chain1",
+                "stream1",
+                "multichainrpc",
+                "BHcXLKwR218R883P6pjiWdBffdMx398im4R8BEwfAxMm");
+
+        // build query
+        AbstractBQLOperator op = BQLCompiler.compile("( confirmations > 10 AND confirmations < 50 ) SORT confirmations");
+
+        // build executor
+        Executor exe = new Executor(mc);
+
+        // execute query
+        Collection<Record> resultSet = exe.execute(op);
+        Assert.assertFalse(resultSet.isEmpty());
     }
 }

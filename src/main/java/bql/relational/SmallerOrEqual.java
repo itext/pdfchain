@@ -29,14 +29,20 @@ public class SmallerOrEqual extends AbstractBQLOperator {
             if(r.containsKey(fieldName))
             {
                 Object val = r.get(fieldName);
-                if(val instanceof Comparable)
+                if(val instanceof Number)
                 {
-                    int cmp = ((Comparable) val).compareTo(fieldValue);
-                    if(cmp <= 0)
+                    Number valN = (Number) val;
+                    Number fldN = (Number) fieldValue;
+                    if(cmpNumbers(valN, fldN) <= 0)
                         out.add(r);
                 }
             }
         }
         return out;
+    }
+
+    private int cmpNumbers(Number n0, Number n1)
+    {
+        return ((Double) n0.doubleValue()).compareTo(n1.doubleValue());
     }
 }

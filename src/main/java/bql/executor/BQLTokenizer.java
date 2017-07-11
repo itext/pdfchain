@@ -16,6 +16,7 @@ public class BQLTokenizer {
         OPERATOR,
         RIGHT_BRACKET,
         STRING,
+        VARIABLE,
         WHITESPACE
     }
 
@@ -61,8 +62,9 @@ public class BQLTokenizer {
                             nextWhitespace(input, offset),
                             nextComma(input, offset),
                             nextLeftBracket(input, offset),
-                            nextRightBracket(input, offset)};
-        Type[] types = {Type.OPERATOR, Type.NUMBER, Type.WHITESPACE, Type.COMMA, Type.LEFT_BRACKET, Type.RIGHT_BRACKET};
+                            nextRightBracket(input, offset),
+                            nextString(input, offset)};
+        Type[] types = {Type.OPERATOR, Type.NUMBER, Type.WHITESPACE, Type.COMMA, Type.LEFT_BRACKET, Type.RIGHT_BRACKET, Type.STRING};
 
         int max = nextPos[0];
         Type type = types[0];
@@ -74,13 +76,13 @@ public class BQLTokenizer {
             }
         }
         if(max == offset) {
-            max = nextString(input, offset);
-            type = Type.STRING;
+            max = nextVariable(input, offset);
+            type = Type.VARIABLE;
         }
         return new Token(input.substring(offset, max), type);
     }
 
-    public static int nextString(String input, int offset)
+    public static int nextVariable(String input, int offset)
     {
         int p = offset;
         while(p < input.length()) {
@@ -90,6 +92,16 @@ public class BQLTokenizer {
             p++;
         }
         return p;
+    }
+
+    public static int nextString(String input, int offset)
+    {
+        if(input.charAt(offset) != '\'')
+            return offset;
+        int p = offset + 1;
+        while(p < input.length() && input.charAt(p) != '\'')
+            p++;
+        return input.charAt(p) == '\'' ? (p+1) : offset;
     }
 
     public static int nextComma(String input, int offset)

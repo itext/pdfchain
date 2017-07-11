@@ -21,7 +21,7 @@ public class ShuntingYard {
                 continue;
 
             // if the token is a number or literal, or variable, push it to the output queue
-            if (t.getType() == BQLTokenizer.Type.NUMBER || t.getType() == BQLTokenizer.Type.STRING) {
+            if (t.getType() == BQLTokenizer.Type.NUMBER || t.getType() == BQLTokenizer.Type.STRING || t.getType() == BQLTokenizer.Type.VARIABLE) {
                 output.add(t);
                 continue;
             }
