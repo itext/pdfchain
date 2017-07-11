@@ -105,6 +105,38 @@ key                              : ï¿½ï¿½Bï¿½ï¿½ï¿½ï¿½ï¿½
 shsh                             : <garbled>
 ```
 
+complex queries on items stored in a blockchain
+
+```java
+	/* build query
+	 * This query selects only those items with a specific id,
+	 * with either less than 5, or more than 10 confirmations.
+	 * It reduces the columns to ["id1", "id2", "blocktime", "confirmations"]
+	 * and sorts the records (default ascending order) by the field "confirmations"
+	 */
+	AbstractBQLOperator op = new SortBy(new Select(
+                                                new And(
+                                                    new Or(
+                                                        new Greater("confirmations", 10),
+                                                        new Smaller("confirmations", 5)
+                                                    ),
+                                                    new EqualID("z�L{�Wd=��\u007F\u0010��G�")
+                                                ),
+                                                new String[]{"id1", "id2", "blocktime", "confirmations"}
+                                            ),
+                                            "confirmations");
+	// set up blockchain
+	IBlockChain mc = new MultiChain(
+                "http://127.0.0.1",
+                4352,
+                "chain1",
+                "stream1",
+                "multichainrpc",
+                "BHcXLKwR218R883P6pjiWdBffdMx398im4R8BEwfAxMm");
+				
+	Executor exe = new Executor(mc);
+	Collection<Record> resultSet = exe.execute(op);
+```
 
 verifying a signature
 ```java
