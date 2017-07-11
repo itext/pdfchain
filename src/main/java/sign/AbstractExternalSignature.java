@@ -1,10 +1,9 @@
+package sign;
+
 import sun.misc.IOUtils;
 
 import javax.crypto.Cipher;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.security.GeneralSecurityException;
 import java.security.Key;
 import java.security.MessageDigest;
@@ -50,10 +49,10 @@ public abstract class AbstractExternalSignature {
      * @param pdfFile
      * @return
      */
-    public byte[] hash(File pdfFile) {
+    public byte[] hash(InputStream pdfFile) {
         try {
             MessageDigest complete = MessageDigest.getInstance(getHashAlgorithm());
-            return complete.digest(IOUtils.readFully(new FileInputStream(pdfFile), 0, false));
+            return complete.digest(IOUtils.readFully(new BufferedInputStream(pdfFile), 0, false));
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (FileNotFoundException e) {
@@ -72,9 +71,12 @@ public abstract class AbstractExternalSignature {
      * @throws GeneralSecurityException
      * @throws IOException
      */
-    public byte[] encryptHash(File pdfFile) throws GeneralSecurityException, IOException {
+    public byte[] encryptHash(InputStream pdfFile) throws GeneralSecurityException, IOException {
+        Key privKey = getPrivateKey();
+        if(privKey == null)
+            return new byte[]{};
         Cipher cipher = Cipher.getInstance(getEncryptionAlgorithm());
-        cipher.init(Cipher.ENCRYPT_MODE, getPrivateKey());
+        cipher.init(Cipher.ENCRYPT_MODE, privKey);
         byte[] cipherData = cipher.doFinal(hash(pdfFile));
         return cipherData;
     }

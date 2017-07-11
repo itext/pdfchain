@@ -59,7 +59,7 @@ putting a document on the blockchain
 						.setStream("stream1");
 
 	// provide the details about signing and hashing
-	AbstractExternalSignature sgn = new DefaultExternalSignature(new File("C:\\Users\\Joris Schellekens\\Downloads\\ks"), "demo", "password");
+	sign.AbstractExternalSignature sgn = new sign.DefaultExternalSignature(new File("C:\\Users\\Joris Schellekens\\Downloads\\ks"), "demo", "password");
 
 	// file being handled
 	File inputFile = new File("C:\\Users\\Joris Schellekens\\Desktop\\pdfs\\30_marked.pdf");
@@ -80,7 +80,7 @@ retrieving document information from the blockchain
 						.setChainName("chain1")
 						.setStream("stream1");
 
-	AbstractExternalSignature sgn = new DefaultExternalSignature(new File("C:\\Users\\Joris Schellekens\\Downloads\\ks"), "demo", "password");
+	sign.AbstractExternalSignature sgn = new sign.DefaultExternalSignature(new File("C:\\Users\\Joris Schellekens\\Downloads\\ks"), "demo", "password");
 
 	File inputFile = new File("C:\\Users\\Joris Schellekens\\Desktop\\pdfs\\30_marked.pdf");
 

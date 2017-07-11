@@ -1,3 +1,5 @@
+package chain;
+
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.httpclient.Credentials;
@@ -29,58 +31,14 @@ public class MultiChain implements IBlockChain {
     // random (for generating a random ID)
     private static final Random rnd = new Random(System.currentTimeMillis());
 
-    public MultiChain setUsername(String username) {
-        this.username = username;
-        return this;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public MultiChain setPassword(String password) {
-        this.password = password;
-        return this;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public MultiChain setHost(String host) {
+    public MultiChain(String host, int port, String chainName, String streamName, String username, String password)
+    {
         this.host = host;
-        return this;
-    }
-
-    public String getHost() {
-        return host;
-    }
-
-    public MultiChain setPort(int port) {
         this.port = port;
-        return this;
-    }
-
-    public int getPort() {
-        return port;
-    }
-
-    public MultiChain setStream(String streamName) {
-        this.streamName = streamName;
-        return this;
-    }
-
-    public String getStreamName() {
-        return streamName;
-    }
-
-    public MultiChain setChainName(String chainName) {
         this.chainName = chainName;
-        return this;
-    }
-
-    public String getChainName() {
-        return chainName;
+        this.streamName = streamName;
+        this.username = username;
+        this.password = password;
     }
 
     public boolean put(String key, Map<String, Object> data) {
@@ -139,7 +97,6 @@ public class MultiChain implements IBlockChain {
         // default
         return java.util.Collections.emptyList();
     }
-
 
     private static String generateRandomID(int len) {
         String chars = "abcdefghijklmnopqrstuvwxyz123456";

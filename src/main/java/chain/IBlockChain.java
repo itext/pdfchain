@@ -1,8 +1,10 @@
+package chain;
+
 import java.util.List;
 import java.util.Map;
 
 /**
- * interface implementing basic blockchain functionality
+ * chain implementing basic blockchain functionality
  */
 public interface IBlockChain {
 

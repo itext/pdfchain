@@ -1,10 +1,15 @@
+import chain.IBlockChain;
 import com.itextpdf.kernel.pdf.PdfArray;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfName;
 import com.itextpdf.kernel.pdf.PdfReader;
+import sign.AbstractExternalSignature;
+import sign.NoOpSignature;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.GeneralSecurityException;
 import java.util.HashMap;
 import java.util.List;
@@ -30,6 +35,16 @@ public class PdfChain {
     }
 
     /**
+     * Construct a new PdfChain object with a given IBlockchain implementation
+     *
+     * @param blockChain the underlying blockchain to be used
+     */
+    public PdfChain(IBlockChain blockChain) {
+        this.blockChain = blockChain;
+        this.externalSignature = new NoOpSignature();
+    }
+
+    /**
      * Puts a pdfFile on the blockchain
      *
      * @param pdfFile the pdf file to be put on the blockchain
@@ -38,7 +53,18 @@ public class PdfChain {
      * @throws GeneralSecurityException
      */
     public boolean put(File pdfFile) throws IOException, GeneralSecurityException {
-        return put(pdfFile, new HashMap<String, String>());
+        return put(new FileInputStream(pdfFile), new HashMap<String, String>());
+    }
+
+    /**
+     * Get all information related to a specific PDF File from the blockchain
+     *
+     * @param pdfFile
+     * @return
+     * @throws IOException
+     */
+    public List<Map<String, Object>> get(File pdfFile) throws IOException {
+        return get(new FileInputStream(pdfFile));
     }
 
     /**
@@ -47,9 +73,30 @@ public class PdfChain {
      * @param pdfFile the file being queried
      * @return
      */
-    public List<Map<String, Object>> get(File pdfFile) {
-        String hash = new String(externalSignature.hash(pdfFile));
-        return blockChain.get(hash);
+    public List<Map<String, Object>> get(InputStream pdfFile) throws IOException {
+
+        // open document
+        PdfDocument pdfDocument = new PdfDocument(new PdfReader(pdfFile));
+
+        // get document properties
+        PdfArray idArr = pdfDocument.getTrailer().getAsArray(PdfName.ID);
+        String id1 = idArr.getAsString(0).toString();
+
+        // close document
+        pdfDocument.close();
+
+        // return
+        return blockChain.get(id1);
+    }
+
+    /**
+     * Get all information related to a specific PDF document from the blockchain
+     *
+     * @param id1 the first ID of the PDF document
+     * @return
+     */
+    public List<Map<String, Object>> get(String id1) {
+        return blockChain.get(id1);
     }
 
     /**
@@ -61,7 +108,7 @@ public class PdfChain {
      * @throws IOException
      * @throws GeneralSecurityException
      */
-    public boolean put(File pdfFile, Map<String, String> extraData) throws IOException, GeneralSecurityException {
+    public boolean put(InputStream pdfFile, Map<String, String> extraData) throws IOException, GeneralSecurityException {
 
         // open document
         PdfDocument pdfDocument = new PdfDocument(new PdfReader(pdfFile));
@@ -90,6 +137,7 @@ public class PdfChain {
         dataOnChain.put("shsh", signedHash);
 
         // call blockchain implementation
-        return blockChain.put(hash, dataOnChain);
+        return blockChain.put(id1, dataOnChain);
     }
+
 }
