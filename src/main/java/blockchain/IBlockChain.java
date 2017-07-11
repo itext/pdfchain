@@ -1,10 +1,10 @@
-package chain;
+package blockchain;
 
 import java.util.List;
 import java.util.Map;
 
 /**
- * chain implementing basic blockchain functionality
+ * blockchain implementing basic blockchain functionality
  */
 public interface IBlockChain {
 
@@ -22,6 +22,11 @@ public interface IBlockChain {
      * @param key the key being queried
      * @return
      */
-    public List<Map<String, Object>> get(String key);
+    public List<Record> get(String key);
 
+    /**
+     * Get all data from the blockchain
+     * @return
+     */
+    public List<Record> all();
 }

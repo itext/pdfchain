@@ -1,4 +1,4 @@
-package chain;
+package blockchain;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
@@ -9,6 +9,7 @@ import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.StringRequestEntity;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.w3c.dom.css.Rect;
 
 import java.io.IOException;
 import java.util.*;
@@ -18,7 +19,7 @@ import java.util.*;
  */
 public class MultiChain implements IBlockChain {
 
-    // chain information
+    // blockchain information
     private String host = "";
     private int port = 0;
     private String chainName = "";
@@ -31,8 +32,7 @@ public class MultiChain implements IBlockChain {
     // random (for generating a random ID)
     private static final Random rnd = new Random(System.currentTimeMillis());
 
-    public MultiChain(String host, int port, String chainName, String streamName, String username, String password)
-    {
+    public MultiChain(String host, int port, String chainName, String streamName, String username, String password) {
         this.host = host;
         this.port = port;
         this.chainName = chainName;
@@ -63,7 +63,25 @@ public class MultiChain implements IBlockChain {
         }
     }
 
-    public List<Map<String, Object>> get(String key) {
+    public List<Record> all() {
+        // build request
+        Map<String, Object> request = new HashMap<>();
+        request.put("method", "liststreamitems");
+        request.put("chain_name", chainName);
+        request.put("params", new String[]{streamName});
+
+        // parse return value
+        try {
+            return processJSON(postJSON(request));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // default
+        return java.util.Collections.emptyList();
+    }
+
+    public List<Record> get(String key) {
 
         // build request
         Map<String, Object> request = new HashMap<>();
@@ -73,14 +91,26 @@ public class MultiChain implements IBlockChain {
 
         // parse return value
         try {
-            JSONObject responseObject = postJSON(request);
+            return processJSON(postJSON(request));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // default
+        return java.util.Collections.emptyList();
+    }
+
+    private List<Record> processJSON(JSONObject responseObject)
+    {
+        // parse return value
+        try {
             JSONArray resultArr = responseObject.getJSONArray("result");
-            List<Map<String, Object>> retval = new ArrayList<>();
+            List<Record> retval = new ArrayList<>();
             for (int i = 0; i < resultArr.length(); i++) {
                 JSONObject resultObj = resultArr.getJSONObject(i);
                 String dataBytes = resultObj.getString("data");
                 dataBytes = new String(Hex.decodeHex(dataBytes.toCharArray()));
-                Map<String, Object> data = new JSONObject(dataBytes).toMap();
+                Record data = new Record(new JSONObject(dataBytes).toMap());
                 Map<String, Object> objectMap = resultObj.toMap();
                 for (String objectDataKey : objectMap.keySet()) {
                     if (objectDataKey.equals("data"))
@@ -90,7 +120,7 @@ public class MultiChain implements IBlockChain {
                 retval.add(data);
             }
             return retval;
-        } catch (IOException | DecoderException e) {
+        } catch (DecoderException e) {
             e.printStackTrace();
         }
 

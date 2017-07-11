@@ -64,10 +64,10 @@ putting a document on the blockchain
 	// file being handled
 	File inputFile = new File("C:\\Users\\Joris Schellekens\\Desktop\\pdfs\\30_marked.pdf");
 
-	// instantiate chain
-	PdfChain chain = new PdfChain(mc, sgn);
+	// instantiate blockchain
+	pdfchain.PdfChain blockchain = new pdfchain.PdfChain(mc, sgn);
 	
-	chain.put(inputFile);
+	blockchain.put(inputFile);
 ```
 
 retrieving document information from the blockchain
@@ -84,8 +84,8 @@ retrieving document information from the blockchain
 
 	File inputFile = new File("C:\\Users\\Joris Schellekens\\Desktop\\pdfs\\30_marked.pdf");
 
-	PdfChain chain = new PdfChain(mc, sgn);
-	for (Map<String, Object> docEntry : chain.get(inputFile)) {
+	pdfchain.PdfChain blockchain = new pdfchain.PdfChain(mc, sgn);
+	for (Map<String, Object> docEntry : blockchain.get(inputFile)) {
 		for (Map.Entry<String, Object> entry : docEntry.entrySet())
 			System.out.println(padRight(entry.getKey(), 32) + " : " + entry.getValue());
 		System.out.println("");

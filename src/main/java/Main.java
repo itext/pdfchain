@@ -1,5 +1,6 @@
-import chain.IBlockChain;
-import chain.MultiChain;
+import blockchain.IBlockChain;
+import blockchain.MultiChain;
+import pdfchain.PdfChain;
 import sign.AbstractExternalSignature;
 import sign.DefaultExternalSignature;
 
@@ -28,6 +29,7 @@ public class Main {
         File inputFile = new File("C:\\Users\\Joris Schellekens\\Desktop\\pdfs\\30_marked.pdf");
 
         PdfChain chain = new PdfChain(mc, sgn);
+        //chain.put(inputFile);
 
         for (Map<String, Object> docEntry : chain.get("z�L{�Wd=��\u007F\u0010��G�")) {
             for (Map.Entry<String, Object> entry : docEntry.entrySet())

@@ -1,4 +1,7 @@
-import chain.IBlockChain;
+package pdfchain;
+
+import blockchain.IBlockChain;
+import blockchain.Record;
 import com.itextpdf.kernel.pdf.PdfArray;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfName;
@@ -24,7 +27,7 @@ public class PdfChain {
     private final IBlockChain blockChain;
 
     /**
-     * Construct a new PdfChain object with a given IBlockchain implementation and AbstractExternalSignature implementation
+     * Construct a new pdfchain.PdfChain object with a given IBlockchain implempentation and AbstractExternalSignature implementation
      *
      * @param blockChain        the underlying blockchain to be used
      * @param externalSignature the signing and hashing methods to be used
@@ -35,7 +38,7 @@ public class PdfChain {
     }
 
     /**
-     * Construct a new PdfChain object with a given IBlockchain implementation
+     * Construct a new pdfchain.PdfChain object with a given IBlockchain implementation
      *
      * @param blockChain the underlying blockchain to be used
      */
@@ -63,7 +66,7 @@ public class PdfChain {
      * @return
      * @throws IOException
      */
-    public List<Map<String, Object>> get(File pdfFile) throws IOException {
+    public List<Record> get(File pdfFile) throws IOException {
         return get(new FileInputStream(pdfFile));
     }
 
@@ -73,7 +76,7 @@ public class PdfChain {
      * @param pdfFile the file being queried
      * @return
      */
-    public List<Map<String, Object>> get(InputStream pdfFile) throws IOException {
+    public List<Record> get(InputStream pdfFile) throws IOException {
 
         // open document
         PdfDocument pdfDocument = new PdfDocument(new PdfReader(pdfFile));
@@ -95,7 +98,7 @@ public class PdfChain {
      * @param id1 the first ID of the PDF document
      * @return
      */
-    public List<Map<String, Object>> get(String id1) {
+    public List<Record> get(String id1) {
         return blockChain.get(id1);
     }
 
@@ -123,7 +126,7 @@ public class PdfChain {
         // close document
         pdfDocument.close();
 
-        // build data to put on chain
+        // build data to put on blockchain
         Map<String, Object> dataOnChain = new HashMap<>();
         for (Map.Entry<String, String> en : extraData.entrySet()) {
             dataOnChain.put(en.getKey(), en.getValue());
