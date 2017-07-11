@@ -12,28 +12,28 @@ The ledger itself can also be programmed to trigger transactions automatically."
 
 ## why should you use it?
 
-A blockchain supercedes older techonology that deals with authentication and non-repudiation.
+A blockchain supersedes older techonology that deals with authentication and non-repudiation.
 First, there are many ways you can sign a document.
 Typically by "signing" we mean creating a hash of a document and storing it.
-With a blockchain the useful part is that once such a hash is stored it can not be changed or deleted. This gives you two things:
+With a blockchain the useful part is that once such a hash is stored, it can not be changed or deleted. This gives you two advantages:
 
-1. The hash itself identify the file from which it was computed
+1. The hash itself identifies the file from which it was computed
 2. The fact that your hash is in the blockchain gives you a point in time when the operation was done.
 
 Later you can say: 
-Hey, I’ve created this hash on 10 Oct 2016 here is the transaction in the blockchain which contains the hash. I’ve created it according to this formula from this file. 
-Now a person can take your file and compute the hash again and verify that it matches the one stored in the blockchain. 
+Hey, I’ve created this hash on 10 Oct 2016: here is the transaction in the blockchain which contains the hash. I’ve created it according to this formula from this file. 
+Now any person can take your file and compute the hash again and verify that it matches the one stored in the blockchain. 
 All this works because:
 
 1. It is very easy to compute the hash from a file but very difficult to craft a similar file which will produce exactly the same hash.
 2. It is practically impossible to change the data stored inside blockchain.
-3. Every transaction in the blockchain has a timestamp so having the transaction we know when exactly it was done.
+3. Every transaction in the blockchain has a timestamp, so having the transaction we know exactly when it was done.
 
-The default iText implementation, specifically geared towards pdf documents stores:
- - a hash value of the document
- - the name of the algorithm that was used for hashing
- - a signed hash value of the document
- - the name of the algorithm that was used for signing
+The default iText implementation of the blockchain concept is specifically geared towards pdf documents. It stores:
+ - a *hash value* of the document
+ - the name of the *algorithm* that was used for *hashing*
+ - a *signed hash value* of the document
+ - the name of the algorithm that was used for *signing*
  - the pdf ID array
  
 This allows you not only to store hash values of documents, but also to digitally sign them.
@@ -41,7 +41,7 @@ Being able to swap the hashing algorithm (in case of hashing algorithms becoming
 
 ## what does iText provide?
 
-### interfaces that hide abstraction
+### interfaces that hide implementation details
 
 ### concrete implementation using JSON-RPC and MultiChain
 
