@@ -1,4 +1,4 @@
-# pdfChain : blockchain for the masses
+﻿# pdfChain : blockchain for the masses
 
 ## what is a blockchain?
 
@@ -50,13 +50,13 @@ Being able to swap the hashing algorithm (in case of hashing algorithms becoming
 putting a document on the blockchain
 ```java
 	// define a multichain instance
-	IBlockChain mc = new MultiChain()
-						.setHost("http://127.0.0.1")
-						.setPort(4352)
-						.setUsername("multichainrpc")
-						.setPassword("BHcXLKwR218R883P6pjiWdBffdMx398im4R8BEwfAxMm")
-						.setChainName("chain1")
-						.setStream("stream1");
+	IBlockChain mc = new MultiChain(
+                "http://127.0.0.1",
+                4352,
+                "chain1",
+                "stream1",
+                "multichainrpc",
+                "BHcXLKwR218R883P6pjiWdBffdMx398im4R8BEwfAxMm");
 
 	// provide the details about signing and hashing
 	sign.AbstractExternalSignature sgn = new sign.DefaultExternalSignature(new File("C:\\Users\\Joris Schellekens\\Downloads\\ks"), "demo", "password");
@@ -72,13 +72,13 @@ putting a document on the blockchain
 
 retrieving document information from the blockchain
 ```java
-	IBlockChain mc = new MultiChain()
-						.setHost("http://127.0.0.1")
-						.setPort(4352)
-						.setUsername("multichainrpc")
-						.setPassword("BHcXLKwR218R883P6pjiWdBffdMx398im4R8BEwfAxMm")
-						.setChainName("chain1")
-						.setStream("stream1");
+	IBlockChain mc = new MultiChain(
+                "http://127.0.0.1",
+                4352,
+                "chain1",
+                "stream1",
+                "multichainrpc",
+                "BHcXLKwR218R883P6pjiWdBffdMx398im4R8BEwfAxMm");
 
 	sign.AbstractExternalSignature sgn = new sign.DefaultExternalSignature(new File("C:\\Users\\Joris Schellekens\\Downloads\\ks"), "demo", "password");
 
