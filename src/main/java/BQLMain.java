@@ -47,22 +47,8 @@ public class BQLMain {
         // print
         for (Map<String, Object> docEntry : resultSet) {
             for (Map.Entry<String, Object> entry : docEntry.entrySet())
-                System.out.println(padRight(entry.getKey(), 32) + " : " + entry.getValue());
+                System.out.println(Utils.padRight(entry.getKey(), 32) + " : " + entry.getValue());
             System.out.println("");
         }
     }
-
-    /**
-     * Utility function for pretty printing
-     *
-     * @param s
-     * @param len
-     * @return
-     */
-    private static String padRight(String s, int len) {
-        while (s.length() < len)
-            s += " ";
-        return s;
-    }
-
 }

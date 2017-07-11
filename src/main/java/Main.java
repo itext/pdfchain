@@ -33,16 +33,9 @@ public class Main {
 
         for (Map<String, Object> docEntry : chain.get("z�L{�Wd=��\u007F\u0010��G�")) {
             for (Map.Entry<String, Object> entry : docEntry.entrySet())
-                System.out.println(padRight(entry.getKey(), 32) + " : " + entry.getValue());
+                System.out.println(Utils.padRight(entry.getKey(), 32) + " : " + entry.getValue());
             System.out.println("");
         }
 
     }
-
-    private static String padRight(String s, int len) {
-        while (s.length() < len)
-            s += " ";
-        return s;
-    }
-
 }
