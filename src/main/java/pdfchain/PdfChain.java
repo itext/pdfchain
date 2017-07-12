@@ -146,7 +146,7 @@ public class PdfChain {
         dataOnChain.put("id1", id1);
         dataOnChain.put("id2", id2);
         dataOnChain.put("hsh", hash);
-        dataOnChain.put("key", new String(externalSignature.getPublicKey().getEncoded()));
+        dataOnChain.put("key", externalSignature.getPublicKey() == null ? "" : new String(externalSignature.getPublicKey().getEncoded()));
         dataOnChain.put("hshalgo", externalSignature.getHashAlgorithm());
         dataOnChain.put("sgnalgo", externalSignature.getEncryptionAlgorithm());
         dataOnChain.put("shsh", signedHash);
