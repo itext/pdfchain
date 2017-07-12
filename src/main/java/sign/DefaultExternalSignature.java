@@ -19,15 +19,7 @@ public class DefaultExternalSignature extends AbstractExternalSignature {
         try {
             ks = KeyStore.getInstance(KeyStore.getDefaultType());
             ks.load(keystoreFile, password.toCharArray());
-        } catch (KeyStoreException e) {
-            e.printStackTrace();
-        } catch (CertificateException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (KeyStoreException | CertificateException | NoSuchAlgorithmException | IOException e) {
             e.printStackTrace();
         }
     }
@@ -46,11 +38,7 @@ public class DefaultExternalSignature extends AbstractExternalSignature {
     public Key getPrivateKey() {
         try {
             return ks.getKey(alias, password.toCharArray());
-        } catch (KeyStoreException e) {
-            e.printStackTrace();
-        } catch (UnrecoverableKeyException e) {
-            e.printStackTrace();
-        } catch (NoSuchAlgorithmException e) {
+        } catch (KeyStoreException | UnrecoverableKeyException | NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
         return null;

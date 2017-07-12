@@ -53,11 +53,7 @@ public abstract class AbstractExternalSignature {
         try {
             MessageDigest complete = MessageDigest.getInstance(getHashAlgorithm());
             return complete.digest(IOUtils.readFully(new BufferedInputStream(pdfFile), 0, false));
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (NoSuchAlgorithmException | IOException e) {
             e.printStackTrace();
         }
         return new byte[]{};
