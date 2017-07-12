@@ -1,5 +1,6 @@
 ﻿# pdfChain : blockchain for the masses
 
+
 ## what is a blockchain?
 
 A blockchain is a distributed database that is used to maintain a continuously growing list of records, called blocks. 
@@ -43,7 +44,14 @@ Being able to swap the hashing algorithm (in case of hashing algorithms becoming
 
 ### interfaces that hide implementation details
 
+The interfaces we impose on blockchain implementations are minimal, yet they provide us with the needed abstraction to enable us to build complex applications and workflows on top of them.
+We abstract a blockchain as a multimap, allowing end-users to store an object (represented by Map<String, Object>) and tying it to a key (String).
+
 ### concrete implementation using JSON-RPC and MultiChain
+
+As a proof of concept we have provided an implementation of the interface IBlockchain using JSON-RPC (remote procedure call) and MultiChain.
+If you want to learn more about setting up a blockchain instance with MultiChain, check out their website for more resources.
+In particular the getting started guide at https://www.multichain.com/getting-started/
 
 ## example(s)
 
