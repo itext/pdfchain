@@ -10,6 +10,7 @@ public class BQLTokenizer {
 
     public enum Type
     {
+        ARRAY,
         COMMA,
         LEFT_BRACKET,
         NUMBER,
@@ -22,14 +23,23 @@ public class BQLTokenizer {
 
     public static class Token
     {
-        private String text;
+        private String[] text;
         private Type type;
-        public Token(String text, Type type)
+        public Token(String[] text)
         {
             this.text = text;
+            this.type = Type.ARRAY;
+        }
+        public Token(String text, Type type)
+        {
+            this.text = new String[]{text};
             this.type = type;
         }
         public String getText()
+        {
+            return text[0];
+        }
+        public String[] getTexts()
         {
             return text;
         }
@@ -37,7 +47,7 @@ public class BQLTokenizer {
         {
             return type;
         }
-        public String toString(){return text + "[" + type.toString() + "]";}
+        public String toString(){return text[0] + "[" + type.toString() + "]";}
     }
 
     public static List<Token> tokenize(String input)
@@ -47,7 +57,7 @@ public class BQLTokenizer {
         while(p < input.length())
         {
             Token en = next(input, p);
-            int n = p + en.text.length();
+            int n = p + en.getText().length();
             if(en.getType() != Type.WHITESPACE)
                 tokens.add(en);
             p = n;

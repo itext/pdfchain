@@ -35,6 +35,24 @@ public class ShuntingYard {
                     output.add(stk.pop());
                 }
                 stk.push(o1);
+                continue;
+            }
+
+            // if the token is a right array parenthesis, process the array and put it on the stack
+            if(t.getType() == BQLTokenizer.Type.LEFT_BRACKET && t.getText().equalsIgnoreCase("["))
+            {
+                List<String> arr = new ArrayList<>();
+                int j = i + 1;
+                while (j < infix.size() && infix.get(j).getType() != BQLTokenizer.Type.RIGHT_BRACKET) {
+                    BQLTokenizer.Token tmp = infix.get(j);
+                    if(tmp.getType() != BQLTokenizer.Type.COMMA && tmp.getType() != BQLTokenizer.Type.WHITESPACE)
+                        arr.add(infix.get(j).getText());
+                    j++;
+                }
+                i = j;
+                BQLTokenizer.Token arrToken  = new BQLTokenizer.Token(arr.toArray(new String[arr.size()]));
+                output.add(arrToken);
+                continue;
             }
 
             // if the token is a left parenthesis, push it onto the stack
@@ -51,6 +69,7 @@ public class ShuntingYard {
                 if (!stk.isEmpty() && stk.peek().getType() == BQLTokenizer.Type.LEFT_BRACKET) {
                     stk.pop();
                 }
+                continue;
             }
         }
         while(!stk.isEmpty())

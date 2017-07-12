@@ -34,6 +34,14 @@ public class BasicFunctionalityTest {
                 "multichainrpc",
                 "BHcXLKwR218R883P6pjiWdBffdMx398im4R8BEwfAxMm");
 
+        mc = new MultiChain(
+                "http://54.158.144.40",
+                2678,
+                "chain1",
+                "stream1",
+                "multichainrpc",
+                "GV3xmvi3mtrWeMBH3CMmXpjLAZPNf1iACV5KYnqS6Fcv");
+
         InputStream keystoreInputStream = BasicFunctionalityTest.class.getClassLoader().getResourceAsStream("ks");
         InputStream inputFileStream = BasicFunctionalityTest.class.getClassLoader().getResourceAsStream("input.pdf");
 

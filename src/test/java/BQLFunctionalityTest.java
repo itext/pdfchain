@@ -76,7 +76,7 @@ public class BQLFunctionalityTest {
                 "BHcXLKwR218R883P6pjiWdBffdMx398im4R8BEwfAxMm");
 
         // build query
-        AbstractBQLOperator op = BQLCompiler.compile("( confirmations > 10 AND confirmations < 50 ) SORT confirmations");
+        AbstractBQLOperator op = BQLCompiler.compile("SELECT [id1, id2, confirmations,hsh]( confirmations > 10 AND confirmations < 50 ) SORT confirmations");
 
         // build executor
         Executor exe = new Executor(mc);

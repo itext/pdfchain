@@ -4,6 +4,7 @@ import bql.AbstractBQLOperator;
 import bql.logical.And;
 import bql.relational.*;
 import bql.sort.SortBy;
+import bql.transform.Select;
 
 import java.util.List;
 import java.util.Stack;
@@ -98,6 +99,13 @@ public class BQLCompiler {
                 BQLTokenizer.Token arg1 = (BQLTokenizer.Token) tmp.pop();
                 AbstractBQLOperator arg0 = (AbstractBQLOperator) tmp.pop();
                 tmp.push(new SortBy(arg0, arg1.getText()));
+            }
+            // SELECT
+            else if(t.getText().equalsIgnoreCase("SELECT"))
+            {
+                AbstractBQLOperator arg1 = (AbstractBQLOperator) tmp.pop();
+                BQLTokenizer.Token  arg0 = (BQLTokenizer.Token) tmp.pop();
+                tmp.push(new Select(arg1, arg0.getTexts()));
             }
         }
         if(tmp.size() != 1)

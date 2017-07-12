@@ -1,4 +1,4 @@
-﻿# pdfChain : blockchain for the masses
+﻿## pdfChain : blockchain for the masses
 
 
 ## what is a blockchain?
@@ -171,6 +171,27 @@ complex queries on items stored in a blockchain
 				
 	Executor exe = new Executor(mc);
 	Collection<Record> resultSet = exe.execute(op);
+```
+
+building complex queries (using a statement)
+```java
+	IBlockChain mc = new MultiChain(
+                "http://127.0.0.1",
+                4352,
+                "chain1",
+                "stream1",
+                "multichainrpc",
+                "BHcXLKwR218R883P6pjiWdBffdMx398im4R8BEwfAxMm");
+
+	// build query
+	AbstractBQLOperator op = BQLCompiler.compile("SELECT [id1, id2, confirmations,hsh]( confirmations > 10 AND confirmations < 50 ) SORT confirmations");
+
+	// build executor
+	Executor exe = new Executor(mc);
+
+	// execute query
+	Collection<Record> resultSet = exe.execute(op);
+	Assert.assertFalse(resultSet.isEmpty());
 ```
 
 verifying a signature
