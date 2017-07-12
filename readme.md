@@ -47,6 +47,33 @@ Being able to swap the hashing algorithm (in case of hashing algorithms becoming
 The interfaces we impose on blockchain implementations are minimal, yet they provide us with the needed abstraction to enable us to build complex applications and workflows on top of them.
 We abstract a blockchain as a multimap, allowing end-users to store an object (represented by Map<String, Object>) and tying it to a key (String).
 
+```java
+public interface IBlockChain {
+
+    /**
+     * Put data on the blockchain
+     *
+     * @param key  the key being used to put the data on the blockchain
+     * @param data the data being put on the blockchain
+     */
+    public boolean put(String key, Map<String, Object> data);
+
+    /**
+     * Get data from the blockchain
+     *
+     * @param key the key being queried
+     * @return
+     */
+    public List<Record> get(String key);
+
+    /**
+     * Get all data from the blockchain
+     * @return
+     */
+    public List<Record> all();
+}
+```
+
 ### concrete implementation using JSON-RPC and MultiChain
 
 As a proof of concept we have provided an implementation of the interface IBlockchain using JSON-RPC (remote procedure call) and MultiChain.
