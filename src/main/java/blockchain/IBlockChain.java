@@ -1,7 +1,6 @@
 package blockchain;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * blockchain implementing basic blockchain functionality
@@ -14,7 +13,7 @@ public interface IBlockChain {
      * @param key  the key being used to put the data on the blockchain
      * @param data the data being put on the blockchain
      */
-    public boolean put(String key, Map<String, Object> data);
+    public boolean put(String key, Record data);
 
     /**
      * Get data from the blockchain

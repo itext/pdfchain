@@ -41,7 +41,7 @@ public class MultiChain implements IBlockChain {
         this.password = password;
     }
 
-    public boolean put(String key, Map<String, Object> data) {
+    public boolean put(String key, Record data) {
 
         // convert data to string
         String hexString = new String(Hex.encodeHex(new JSONObject(data).toString(3).getBytes()));

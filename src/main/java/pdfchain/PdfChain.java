@@ -139,7 +139,7 @@ public class PdfChain {
         pdfDocument.close();
 
         // build data to put on blockchain
-        Map<String, Object> dataOnChain = new HashMap<>();
+        Record dataOnChain = new Record();
         for (Map.Entry<String, String> en : extraData.entrySet()) {
             dataOnChain.put(en.getKey(), en.getValue());
         }
