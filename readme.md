@@ -96,10 +96,10 @@ putting a document on the blockchain
                 "BHcXLKwR218R883P6pjiWdBffdMx398im4R8BEwfAxMm");
 
 	// provide the details about signing and hashing
-	sign.AbstractExternalSignature sgn = new sign.DefaultExternalSignature(new File("C:\\Users\\Joris Schellekens\\Downloads\\ks"), "demo", "password");
+	sign.AbstractExternalSignature sgn = new sign.DefaultExternalSignature(new File("path_to_keystore"), "demo", "password");
 
 	// file being handled
-	File inputFile = new File("C:\\Users\\Joris Schellekens\\Desktop\\pdfs\\30_marked.pdf");
+	File inputFile = new File("input.pdf");
 
 	// instantiate blockchain
 	pdfchain.PdfChain blockchain = new pdfchain.PdfChain(mc, sgn);
@@ -117,9 +117,9 @@ retrieving document information from the blockchain
                 "multichainrpc",
                 "BHcXLKwR218R883P6pjiWdBffdMx398im4R8BEwfAxMm");
 
-	sign.AbstractExternalSignature sgn = new sign.DefaultExternalSignature(new File("C:\\Users\\Joris Schellekens\\Downloads\\ks"), "demo", "password");
+	sign.AbstractExternalSignature sgn = new sign.DefaultExternalSignature(new File("path_to_keystore"), "demo", "password");
 
-	File inputFile = new File("C:\\Users\\Joris Schellekens\\Desktop\\pdfs\\30_marked.pdf");
+	File inputFile = new File("input.pdf");
 
 	pdfchain.PdfChain blockchain = new pdfchain.PdfChain(mc, sgn);
 	for (Map<String, Object> docEntry : blockchain.get(inputFile)) {
