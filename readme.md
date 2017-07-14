@@ -45,7 +45,7 @@ Being able to swap the hashing algorithm (in case of hashing algorithms becoming
 ### interfaces that hide implementation details
 
 The interfaces we impose on blockchain implementations are minimal, yet they provide us with the needed abstraction to enable us to build complex applications and workflows on top of them.
-We abstract a blockchain as a multimap, allowing end-users to store an object (represented by `Map<String, Object>`) and tying it to a key (String).
+We abstract a blockchain as a multimap, allowing end-users to store an object (represented by Record, which is `HashMap<String, Object>`) and tying it to a key (String).
 
 ![Figure 0: Type Hierarchy](type_hierarchy.png)
 
@@ -58,7 +58,7 @@ public interface IBlockChain {
      * @param key  the key being used to put the data on the blockchain
      * @param data the data being put on the blockchain
      */
-    public boolean put(String key, Map<String, Object> data);
+    public boolean put(String key, Record data);
 
     /**
      * Get data from the blockchain
