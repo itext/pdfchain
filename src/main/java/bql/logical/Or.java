@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by Joris Schellekens on 7/11/2017.
+ * BQL Logical OR operator
  */
 public class Or extends AbstractBQLOperator{
 

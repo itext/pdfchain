@@ -5,7 +5,7 @@ import blockchain.Record;
 import java.util.Collection;
 
 /**
- * Created by Joris Schellekens on 7/11/2017.
+ * Interface representing a BQL operator
  */
 public interface IBQLOperator {
 

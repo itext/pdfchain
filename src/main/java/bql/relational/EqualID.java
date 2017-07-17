@@ -7,7 +7,9 @@ import java.util.Collection;
 import java.util.HashSet;
 
 /**
- * Created by Joris Schellekens on 7/11/2017.
+ * BQL Relational == operator (specifically for ID)
+ * by keeping the == operator for ID separate, we are able to detect it in the abstract syntax tree.
+ * Doing so enables us to sometimes optimize queries.
  */
 public class EqualID extends AbstractBQLOperator{
 

@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.HashSet;
 
 /**
- * Created by Joris Schellekens on 7/11/2017.
+ * BQL Relational > operator
  */
 public class Greater extends AbstractBQLOperator {
 

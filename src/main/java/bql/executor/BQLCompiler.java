@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Stack;
 
 /**
- * Created by Joris Schellekens on 7/11/2017.
+ * Compiler for BQL
  */
 public class BQLCompiler {
 

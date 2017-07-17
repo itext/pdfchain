@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Created by Joris Schellekens on 7/11/2017.
+ * Abstract implementation of IBQLOperator
  */
 public abstract class AbstractBQLOperator implements IBQLOperator {
 

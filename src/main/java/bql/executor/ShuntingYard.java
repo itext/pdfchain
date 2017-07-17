@@ -5,10 +5,17 @@ import java.util.List;
 import java.util.Stack;
 
 /**
- * Created by Joris Schellekens on 7/11/2017.
+ * ShuntingYard implementation for BQL
+ * A Shunting Yard algorithm will take an expression in infix notation and convert it to postfix.
+ * Postfix is a lot easier to process for building abstract syntax trees.
  */
 public class ShuntingYard {
 
+    /**
+     *
+     * @param infix
+     * @return
+     */
     public static List<BQLTokenizer.Token> postfix(List<BQLTokenizer.Token> infix)
     {
         Stack<BQLTokenizer.Token> stk = new Stack<>();
@@ -83,6 +90,12 @@ public class ShuntingYard {
         return output;
     }
 
+    /**
+     * Get the precedence of a certain operator
+     * Precedence dictates what gets executed first in ambiguous statements such as "A + B * C"
+     * @param token
+     * @return
+     */
     private static int precedence(BQLTokenizer.Token token)
     {
         String[] operators = {  // high level
@@ -108,6 +121,13 @@ public class ShuntingYard {
         return (int) Math.pow(operators.length, 2);
     }
 
+    /**
+     * Get whether an operator is left associative or not
+     * Associativity helps structuring statements such as "A - B - C - D"
+     * which can be interpreted as either "(((A - B) - C) - D)" or "(A - (B - (C - D)))"
+     * @param token
+     * @return
+     */
     private static boolean isLeftAssociative(BQLTokenizer.Token token)
     {
         return true;

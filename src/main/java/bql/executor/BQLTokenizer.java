@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Joris Schellekens on 7/11/2017.
+ * (greedy) Tokenizer for BQL
  */
 public class BQLTokenizer {
 

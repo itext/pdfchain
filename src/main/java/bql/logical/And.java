@@ -7,7 +7,7 @@ import bql.IBQLOperator;
 import java.util.Collection;
 
 /**
- * Created by Joris Schellekens on 7/11/2017.
+ * BQL Logical AND operator
  */
 public class And extends AbstractBQLOperator {
 

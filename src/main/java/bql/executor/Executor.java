@@ -12,7 +12,9 @@ import bql.transform.Select;
 import java.util.*;
 
 /**
- * Created by Joris Schellekens on 7/11/2017.
+ * Executor for BQL
+ * This class executes statements in the form of abstract syntax trees.
+ * Either build the tree yourself, or use the BQLCompiler to build it for you.
  */
 public class Executor {
 
