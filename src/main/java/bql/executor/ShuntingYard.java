@@ -83,7 +83,7 @@ public class ShuntingYard {
         {
             BQLTokenizer.Token t = stk.pop();
             if(t.getType() == BQLTokenizer.Type.LEFT_BRACKET || t.getType() == BQLTokenizer.Type.RIGHT_BRACKET)
-                throw new IllegalArgumentException("Mismatched parenthesis");
+                throw new IllegalArgumentException("Mismatched parenthesis in expression");
             output.add(t);
         }
         // return
