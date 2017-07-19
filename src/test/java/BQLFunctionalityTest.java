@@ -6,7 +6,7 @@ import blockchain.MultiChain;
 import blockchain.Record;
 import bql.AbstractBQLOperator;
 import bql.executor.BQLCompiler;
-import bql.executor.Executor;
+import bql.executor.BQLExecutor;
 import bql.logical.And;
 import bql.logical.Or;
 import bql.relational.EqualID;
@@ -18,15 +18,10 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import pdfchain.PdfChain;
-import sign.AbstractExternalSignature;
-import sign.DefaultExternalSignature;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.security.GeneralSecurityException;
 import java.util.Collection;
-import java.util.Map;
 
 @Category(IntegrationTest.class)
 public class BQLFunctionalityTest {
@@ -58,7 +53,7 @@ public class BQLFunctionalityTest {
                 "confirmations");
 
         // build executor
-        Executor exe = new Executor(mc);
+        BQLExecutor exe = new BQLExecutor(mc);
 
         // execute query
         boolean isEmpty = exe.execute(op).isEmpty();
@@ -76,10 +71,10 @@ public class BQLFunctionalityTest {
                 "BHcXLKwR218R883P6pjiWdBffdMx398im4R8BEwfAxMm");
 
         // build query
-        AbstractBQLOperator op = BQLCompiler.compile("SELECT [id1, id2, confirmations,hsh](( confirmations > 10 AND confirmations < 50 ) SORT confirmations");
+        AbstractBQLOperator op = BQLCompiler.compile("SELECT [id1, id2, confirmations,hsh]( confirmations > 10 AND confirmations < 50 ) SORT confirmations");
 
         // build executor
-        Executor exe = new Executor(mc);
+        BQLExecutor exe = new BQLExecutor(mc);
 
         // execute query
         Collection<Record> resultSet = exe.execute(op);

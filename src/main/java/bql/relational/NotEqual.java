@@ -10,12 +10,12 @@ import java.util.HashSet;
 /**
  * BQL Relational != operator
  */
-public class Unequal extends AbstractBQLOperator {
+public class NotEqual extends AbstractBQLOperator {
 
     private String fieldName;
     private Object fieldValue;
 
-    public Unequal(String fieldName, Object fieldValue)
+    public NotEqual(String fieldName, Object fieldValue)
     {
         this.fieldName = fieldName;
         this.fieldValue = fieldValue;

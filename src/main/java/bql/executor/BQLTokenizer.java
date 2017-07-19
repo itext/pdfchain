@@ -47,7 +47,7 @@ public class BQLTokenizer {
         {
             return type;
         }
-        public String toString(){return text[0] + "[" + type.toString() + "]";}
+        public String toString(){return text[0] + " [" + type.toString() + "]";}
     }
 
     public static List<Token> tokenize(String input)
@@ -141,7 +141,7 @@ public class BQLTokenizer {
     public static int nextKeyword(String input, int offset)
     {
         input = input.toUpperCase();
-        String[] operators = {"WHERE","AND","OR","SELECT",">",">=","<","<=","==","!=","SORT"};
+        String[] operators = {"WHERE","AND","OR","SELECT",">",">=","<","<=","==","!=","SORT","*"};
         int maxPos = offset;
         for(int i=0;i<operators.length;i++)
         {
@@ -169,7 +169,7 @@ public class BQLTokenizer {
     public static int nextWhitespace(String input, int offset)
     {
         int p = offset;
-        while(p < input.length() && Character.isWhitespace(input.charAt(p)))
+        while(p < input.length() && (Character.isWhitespace(input.charAt(p))  || input.charAt(p) == '\n'))
             p++;
         return p;
     }

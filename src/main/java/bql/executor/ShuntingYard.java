@@ -2,6 +2,7 @@ package bql.executor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Stack;
 
 /**
@@ -18,6 +19,7 @@ public class ShuntingYard {
      */
     public static List<BQLTokenizer.Token> postfix(List<BQLTokenizer.Token> infix)
     {
+        Map<Integer, Integer> matchingBrackets = BQLBracketMatcher.matchingBrackets(infix);
         Stack<BQLTokenizer.Token> stk = new Stack<>();
         List<BQLTokenizer.Token> output = new ArrayList<>();
 
@@ -49,14 +51,12 @@ public class ShuntingYard {
             if(t.getType() == BQLTokenizer.Type.LEFT_BRACKET && t.getText().equalsIgnoreCase("["))
             {
                 List<String> arr = new ArrayList<>();
-                int j = i + 1;
-                while (j < infix.size() && infix.get(j).getType() != BQLTokenizer.Type.RIGHT_BRACKET) {
+                for(int j=i+1;j<matchingBrackets.get(i);j++) {
                     BQLTokenizer.Token tmp = infix.get(j);
                     if(tmp.getType() != BQLTokenizer.Type.COMMA && tmp.getType() != BQLTokenizer.Type.WHITESPACE)
                         arr.add(infix.get(j).getText());
-                    j++;
                 }
-                i = j;
+                i = matchingBrackets.get(i);
                 BQLTokenizer.Token arrToken  = new BQLTokenizer.Token(arr.toArray(new String[arr.size()]));
                 output.add(arrToken);
                 continue;
@@ -99,9 +99,7 @@ public class ShuntingYard {
     private static int precedence(BQLTokenizer.Token token)
     {
         String[] operators = {  // high level
-                                "SORT",
-                                "SELECT",
-                                "WHERE",
+                                "*",
                                 // comparison operators
                                 ">",
                                 ">=",
@@ -112,7 +110,12 @@ public class ShuntingYard {
                                 "!=",
                                 // logical operators
                                 "AND",
-                                "OR"};
+                                "OR",
+                                // display operators
+                                "SORT",
+                                "SELECT",
+                                "WHERE"
+        };
         for(int i=0;i<operators.length;i++)
         {
             if(token.getText().equalsIgnoreCase(operators[i]))

@@ -12,15 +12,15 @@ import bql.transform.Select;
 import java.util.*;
 
 /**
- * Executor for BQL
+ * BQLExecutor for BQL
  * This class executes statements in the form of abstract syntax trees.
  * Either build the tree yourself, or use the BQLCompiler to build it for you.
  */
-public class Executor {
+public class BQLExecutor {
 
     private IBlockChain blockchain;
 
-    public Executor(IBlockChain blockchain)
+    public BQLExecutor(IBlockChain blockchain)
     {
         this.blockchain = blockchain;
     }
