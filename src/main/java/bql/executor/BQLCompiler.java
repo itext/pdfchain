@@ -5,6 +5,8 @@ import bql.logical.And;
 import bql.logical.Or;
 import bql.relational.*;
 import bql.sort.SortBy;
+import bql.string.EndsWith;
+import bql.string.StartsWith;
 import bql.transform.Select;
 
 import java.util.List;
@@ -87,6 +89,16 @@ public class BQLCompiler {
             {
                 tmp.push(buildSelect(tmp));
             }
+            // STARTS WITH
+            else if(t.getText().equalsIgnoreCase("STARTS_WITH"))
+            {
+                tmp.push(buildStartsWith(tmp));
+            }
+            // ENDS WITH
+            else if(t.getText().equalsIgnoreCase("ENDS_WITH"))
+            {
+                tmp.push(buildEndsWith(tmp));
+            }
         }
         if(tmp.size() != 1)
             throw new IllegalArgumentException("Invalid input '" + expression + "'");
@@ -107,6 +119,32 @@ public class BQLCompiler {
         if(!isOperator(arg0) || !isArray(arg1))
             throw new IllegalArgumentException("Invalid argument(s) for operator SELECT");
         return new Select((AbstractBQLOperator) arg0, ((BQLTokenizer.Token) arg1).getTexts());
+    }
+
+    private static AbstractBQLOperator buildStartsWith(Stack<Object> stk)
+    {
+        if(stk.size() < 2)
+            throw new IllegalArgumentException("Not enough arguments for operator STARTS_WITH");
+        Object arg0 = stk.pop();
+        Object arg1 = stk.pop();
+        if(!isVariable(arg1) || !isString(arg0))
+            throw new IllegalArgumentException("Invalid argument(s) for operator STARTS_WITH");
+        String val = ((BQLTokenizer.Token) arg0).getText();
+        val = val.substring(1, val.length() - 1);
+        return new StartsWith(((BQLTokenizer.Token) arg1).getText(), val);
+    }
+
+    private static AbstractBQLOperator buildEndsWith(Stack<Object> stk)
+    {
+        if(stk.size() < 2)
+            throw new IllegalArgumentException("Not enough arguments for operator ENDS_WITH");
+        Object arg0 = stk.pop();
+        Object arg1 = stk.pop();
+        if(!isVariable(arg1) || !isString(arg0))
+            throw new IllegalArgumentException("Invalid argument(s) for operator ENDS_WITH");
+        String val = ((BQLTokenizer.Token) arg0).getText();
+        val = val.substring(1, val.length() - 1);
+        return new EndsWith(((BQLTokenizer.Token) arg1).getText(), val);
     }
 
     private static AbstractBQLOperator buildSort(Stack<Object> stk)

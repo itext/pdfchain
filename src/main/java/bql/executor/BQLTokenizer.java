@@ -141,7 +141,7 @@ public class BQLTokenizer {
     public static int nextKeyword(String input, int offset)
     {
         input = input.toUpperCase();
-        String[] operators = {"WHERE","AND","OR","SELECT",">",">=","<","<=","==","!=","SORT","*"};
+        String[] operators = {"!=", "*", "<", "<=", "==", ">", ">=", "AND", "ENDS_WITH", "OR", "SELECT", "SORT", "STARTS_WITH", "WHERE"};
         int maxPos = offset;
         for(int i=0;i<operators.length;i++)
         {

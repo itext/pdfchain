@@ -200,6 +200,12 @@ verifying a signature
 ```java
 ```
 
+## user interface
+
+We've also provided a small UI that showcases some of the more common  usecases
+
+![Figure 1: Entering a BQL query through the user interface](bql_example.png)
+
 ## how can you extend upon it?
 
 There are two important ways in which you can contribute to or extend this component:
