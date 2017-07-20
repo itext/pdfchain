@@ -11,8 +11,7 @@ import java.util.Collection;
  */
 public class And extends AbstractBQLOperator {
 
-    public And(AbstractBQLOperator left, AbstractBQLOperator right)
-    {
+    public And(AbstractBQLOperator left, AbstractBQLOperator right) {
         addChild(left);
         addChild(right);
     }

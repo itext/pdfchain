@@ -68,7 +68,7 @@ public class MultiChain implements IBlockChain {
         Map<String, Object> request = new HashMap<>();
         request.put("method", "liststreamitems");
         request.put("chain_name", chainName);
-        request.put("params", new String[]{streamName});
+        request.put("params", new Object[]{streamName, false, 1024});
 
         // parse return value
         try {
@@ -87,7 +87,7 @@ public class MultiChain implements IBlockChain {
         Map<String, Object> request = new HashMap<>();
         request.put("method", "liststreamkeyitems");
         request.put("chain_name", chainName);
-        request.put("params", new String[]{streamName, key});
+        request.put("params", new Object[]{streamName, key});
 
         // parse return value
         try {
@@ -100,8 +100,7 @@ public class MultiChain implements IBlockChain {
         return java.util.Collections.emptyList();
     }
 
-    private List<Record> processJSON(JSONObject responseObject)
-    {
+    private List<Record> processJSON(JSONObject responseObject) {
         // parse return value
         try {
             JSONArray resultArr = responseObject.getJSONArray("result");
@@ -110,14 +109,17 @@ public class MultiChain implements IBlockChain {
                 JSONObject resultObj = resultArr.getJSONObject(i);
                 String dataBytes = resultObj.getString("data");
                 dataBytes = new String(Hex.decodeHex(dataBytes.toCharArray()));
-                Record data = new Record(new JSONObject(dataBytes).toMap());
-                Map<String, Object> objectMap = resultObj.toMap();
-                for (String objectDataKey : objectMap.keySet()) {
-                    if (objectDataKey.equals("data"))
-                        continue;
-                    data.put(objectDataKey, objectMap.get(objectDataKey));
+                try {
+                    Record data = new Record(new JSONObject(dataBytes).toMap());
+                    Map<String, Object> objectMap = resultObj.toMap();
+                    for (String objectDataKey : objectMap.keySet()) {
+                        if (objectDataKey.equals("data"))
+                            continue;
+                        data.put(objectDataKey, objectMap.get(objectDataKey));
+                    }
+                    retval.add(data);
+                } catch (Exception ex) {
                 }
-                retval.add(data);
             }
             return retval;
         } catch (DecoderException e) {

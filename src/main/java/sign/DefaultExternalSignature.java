@@ -13,14 +13,14 @@ public class DefaultExternalSignature extends AbstractExternalSignature {
     private String alias;
     private String password;
 
-    public DefaultExternalSignature(InputStream keystoreFile, String alias, String password) {
+    public DefaultExternalSignature(InputStream keystoreFile, String alias, String password) throws CertificateException, NoSuchAlgorithmException, KeyStoreException, IOException {
         this.alias = alias;
         this.password = password;
         try {
             ks = KeyStore.getInstance(KeyStore.getDefaultType());
             ks.load(keystoreFile, password.toCharArray());
         } catch (KeyStoreException | CertificateException | NoSuchAlgorithmException | IOException e) {
-            e.printStackTrace();
+            throw e;
         }
     }
 

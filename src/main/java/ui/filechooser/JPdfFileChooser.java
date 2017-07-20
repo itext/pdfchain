@@ -10,27 +10,26 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 
 /**
- *
  * @author Joris Schellekens
  */
-public class JPdfFileChooser extends JFileChooser{
-    
-    public JPdfFileChooser()
-    {
+public class JPdfFileChooser extends JFileChooser {
+
+    public JPdfFileChooser() {
         setCurrentDirectory(new File(System.getProperty("user.home")));
-        setFileFilter(new FileFilter(){
+        setFileFilter(new FileFilter() {
             @Override
             public boolean accept(File f) {
-                if(f.isDirectory())
+                if (f.isDirectory())
                     return true;
                 String name = f.getName().toLowerCase();
                 return name.endsWith(".pdf");
             }
+
             @Override
             public String getDescription() {
                 return "Portable Document Format (.pdf)";
             }
         });
-        setMultiSelectionEnabled(false);        
+        setMultiSelectionEnabled(false);
     }
 }

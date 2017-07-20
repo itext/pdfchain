@@ -25,6 +25,7 @@ public interface IBlockChain {
 
     /**
      * Get all data from the blockchain
+     *
      * @return
      */
     public List<Record> all();

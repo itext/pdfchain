@@ -1,6 +1,7 @@
 /**
  * Created by Joris Schellekens on 7/11/2017.
  */
+
 import blockchain.IBlockChain;
 import blockchain.MultiChain;
 import blockchain.Record;
@@ -27,7 +28,8 @@ import java.util.Collection;
 public class BQLFunctionalityTest {
 
     @BeforeClass
-    public static void beforeClass() {}
+    public static void beforeClass() {
+    }
 
     @Test
     public void queryBlockChainTestA() throws IOException, GeneralSecurityException {

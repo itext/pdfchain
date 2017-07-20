@@ -8,10 +8,10 @@ import java.util.Map;
  */
 public class Record extends HashMap<String, Object> {
 
-    public Record(){}
+    public Record() {
+    }
 
-    public Record(Map<String, Object> m)
-    {
+    public Record(Map<String, Object> m) {
         this.putAll(m);
     }
 }

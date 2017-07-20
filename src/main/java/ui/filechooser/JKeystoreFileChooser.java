@@ -8,17 +8,17 @@ import java.io.File;
  * Created by Joris Schellekens on 7/18/2017.
  */
 public class JKeystoreFileChooser extends JFileChooser {
-    public JKeystoreFileChooser()
-    {
+    public JKeystoreFileChooser() {
         setCurrentDirectory(new File(System.getProperty("user.home")));
-        setFileFilter(new FileFilter(){
+        setFileFilter(new FileFilter() {
             @Override
             public boolean accept(File f) {
-                if(f.isDirectory())
+                if (f.isDirectory())
                     return true;
                 String name = f.getName().toLowerCase();
                 return name.endsWith("ks");
             }
+
             @Override
             public String getDescription() {
                 return "Keystore (ks)";

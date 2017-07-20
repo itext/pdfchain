@@ -17,13 +17,11 @@ import pdfchain.PdfChain;
 import ui.filechooser.JPdfFileChooser;
 
 /**
- *
  * @author Joris Schellekens
  */
 public class Main {
-    
-    public static void main(String[] args)
-    {
+
+    public static void main(String[] args) {
         // set look and feel
         try {
             for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
@@ -34,8 +32,8 @@ public class Main {
             }
         } catch (Exception e) {
             // If Nimbus is not available, you can set the GUI to another look and feel.
-        }        
-        
+        }
+
         JFrame frame = new ITextBlockchainFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);

@@ -20,61 +20,53 @@ public class BQLExecutor {
 
     private IBlockChain blockchain;
 
-    public BQLExecutor(IBlockChain blockchain)
-    {
+    public BQLExecutor(IBlockChain blockchain) {
         this.blockchain = blockchain;
     }
 
-    public Collection<Record> execute(AbstractBQLOperator op)
-    {
+    public Collection<Record> execute(AbstractBQLOperator op) {
         Object id = useID(op);
         Collection<Record> db = (id == null) ? blockchain.all() : blockchain.get(id.toString());
         return op.apply(db);
     }
 
-    private List<AbstractBQLOperator> leaves(AbstractBQLOperator root)
-    {
+    private List<AbstractBQLOperator> leaves(AbstractBQLOperator root) {
         List<AbstractBQLOperator> out = new ArrayList<>();
         Stack<AbstractBQLOperator> operatorStack = new Stack();
         operatorStack.push(root);
-        while(!operatorStack.isEmpty())
-        {
+        while (!operatorStack.isEmpty()) {
             AbstractBQLOperator op = operatorStack.pop();
-            if(op.getChildren().isEmpty())
+            if (op.getChildren().isEmpty())
                 out.add(op);
-            else{
-                for(AbstractBQLOperator c : op.getChildren())
+            else {
+                for (AbstractBQLOperator c : op.getChildren())
                     operatorStack.push(c);
             }
         }
         return out;
     }
 
-    private Object useID(AbstractBQLOperator root)
-    {
-        for(AbstractBQLOperator leaf : leaves(root))
-        {
+    private Object useID(AbstractBQLOperator root) {
+        for (AbstractBQLOperator leaf : leaves(root)) {
             AbstractBQLOperator tmp = leaf;
-            if(!(tmp instanceof EqualID))
+            if (!(tmp instanceof EqualID))
                 continue;
             boolean pathUp = true;
-            while(tmp.getParent() != null)
-            {
+            while (tmp.getParent() != null) {
                 AbstractBQLOperator parent = tmp.getParent();
-                if(!enforcesID(parent))
-                {
+                if (!enforcesID(parent)) {
                     pathUp = false;
                     break;
                 }
                 tmp = parent;
             }
-            if(pathUp)
+            if (pathUp)
                 return ((EqualID) leaf).getSelectedValue();
         }
         return null;
     }
 
-    private boolean enforcesID(AbstractBQLOperator operator){
+    private boolean enforcesID(AbstractBQLOperator operator) {
         return (operator instanceof And) ||
                 (operator instanceof Select) ||
                 (operator instanceof SortBy);

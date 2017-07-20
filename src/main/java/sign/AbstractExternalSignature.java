@@ -69,7 +69,7 @@ public abstract class AbstractExternalSignature {
      */
     public byte[] encryptHash(InputStream pdfFile) throws GeneralSecurityException, IOException {
         Key privKey = getPrivateKey();
-        if(privKey == null)
+        if (privKey == null)
             return new byte[]{};
         Cipher cipher = Cipher.getInstance(getEncryptionAlgorithm());
         cipher.init(Cipher.ENCRYPT_MODE, privKey);

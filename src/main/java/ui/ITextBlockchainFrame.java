@@ -40,13 +40,19 @@ public class ITextBlockchainFrame extends JFrame {
     private JXTaskPane workflowPane;
     private JTable resultsTable;
 
-    public ITextBlockchainFrame()
-    {
+    IBlockChain blockchainImpl = new MultiChain(
+            "http://127.0.0.1",
+            4352,
+            "chain1",
+            "stream1",
+            "multichainrpc",
+            "BHcXLKwR218R883P6pjiWdBffdMx398im4R8BEwfAxMm");
+
+    public ITextBlockchainFrame() {
         initComponents();
     }
 
-    private void initComponents()
-    {
+    private void initComponents() {
         // a container to put all JXTaskPane together
         JXTaskPaneContainer taskPaneContainer = new JXTaskPaneContainer();
 
@@ -83,18 +89,17 @@ public class ITextBlockchainFrame extends JFrame {
     }
 
     /**
-     *  PUT
+     * PUT
      */
 
-    private Action putFileAction()
-    {
+    private Action putFileAction() {
         Icon icon = null;
         try {
             icon = new ImageIcon(ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("img/cloud_put.png")));
         } catch (IOException ex) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
         }
-        Action retval = new AbstractAction("put", icon){
+        Action retval = new AbstractAction("put", icon) {
             @Override
             public void actionPerformed(ActionEvent e) {
                 putFile();
@@ -103,20 +108,12 @@ public class ITextBlockchainFrame extends JFrame {
         return retval;
     }
 
-    private void putFile()
-    {
-        IBlockChain mc = new MultiChain(
-                "http://127.0.0.1",
-                4352,
-                "chain1",
-                "stream1",
-                "multichainrpc",
-                "BHcXLKwR218R883P6pjiWdBffdMx398im4R8BEwfAxMm");
+    private void putFile() {
 
-        PdfChain pdfChain = new PdfChain(mc);
+        PdfChain pdfChain = new PdfChain(blockchainImpl);
         JFileChooser jFileChooser = new JPdfFileChooser();
         int retVal = jFileChooser.showOpenDialog(this);
-        if(retVal != JFileChooser.APPROVE_OPTION)
+        if (retVal != JFileChooser.APPROVE_OPTION)
             return;
 
         File pdfFile = jFileChooser.getSelectedFile();
@@ -136,18 +133,17 @@ public class ITextBlockchainFrame extends JFrame {
     }
 
     /**
-     *  GET
+     * GET
      */
 
-    private Action getFileAction()
-    {
+    private Action getFileAction() {
         Icon icon = null;
         try {
             icon = new ImageIcon(ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("img/cloud_get.png")));
         } catch (IOException ex) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
         }
-        Action retval = new AbstractAction("get", icon){
+        Action retval = new AbstractAction("get", icon) {
             @Override
             public void actionPerformed(ActionEvent e) {
                 getFile();
@@ -156,20 +152,11 @@ public class ITextBlockchainFrame extends JFrame {
         return retval;
     }
 
-    private void getFile()
-    {
-        IBlockChain mc = new MultiChain(
-                "http://127.0.0.1",
-                4352,
-                "chain1",
-                "stream1",
-                "multichainrpc",
-                "BHcXLKwR218R883P6pjiWdBffdMx398im4R8BEwfAxMm");
-
-        PdfChain pdfChain = new PdfChain(mc);
+    private void getFile() {
+        PdfChain pdfChain = new PdfChain(blockchainImpl);
         JFileChooser jFileChooser = new JPdfFileChooser();
         int retVal = jFileChooser.showOpenDialog(this);
-        if(retVal != JFileChooser.APPROVE_OPTION)
+        if (retVal != JFileChooser.APPROVE_OPTION)
             return;
 
         File pdfFile = jFileChooser.getSelectedFile();
@@ -185,15 +172,14 @@ public class ITextBlockchainFrame extends JFrame {
      * SIGN
      */
 
-    private Action signAction()
-    {
+    private Action signAction() {
         Icon icon = null;
         try {
             icon = new ImageIcon(ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("img/document_sign.png")));
         } catch (IOException ex) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
         }
-        Action retval = new AbstractAction("sign", icon){
+        Action retval = new AbstractAction("sign", icon) {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -208,32 +194,24 @@ public class ITextBlockchainFrame extends JFrame {
 
     private void sign() throws FileNotFoundException {
 
-        IBlockChain mc = new MultiChain(
-                "http://127.0.0.1",
-                4352,
-                "chain1",
-                "stream1",
-                "multichainrpc",
-                "BHcXLKwR218R883P6pjiWdBffdMx398im4R8BEwfAxMm");
-
         // open dialog for selecting a keystore
         JFileChooser jFileChooser = new JKeystoreFileChooser();
         int retVal = jFileChooser.showOpenDialog(this);
-        if(retVal != JFileChooser.APPROVE_OPTION)
+        if (retVal != JFileChooser.APPROVE_OPTION)
             return;
 
         // open dialog for selecting user from keystore
         KeystoreDialog keystoreDialog = new KeystoreDialog(this, true);
+        keystoreDialog.setTitle("Enter your credentials");
         keystoreDialog.setVisible(true);
-        if(keystoreDialog.getUsername().isEmpty() || keystoreDialog.getPassword().isEmpty())
+        if (keystoreDialog.getUsername().isEmpty() || keystoreDialog.getPassword().isEmpty())
             return;
 
         // set up a signature provider
         DefaultExternalSignature signature = null;
         try {
             signature = new DefaultExternalSignature(new FileInputStream(jFileChooser.getSelectedFile()), keystoreDialog.getUsername(), keystoreDialog.getPassword());
-        }catch(Exception ex)
-        {
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(this,
                     "Keystore was tampered with, or password was incorrect.",
                     "IOException",
@@ -242,11 +220,11 @@ public class ITextBlockchainFrame extends JFrame {
         }
 
         // set up a pdf chain
-        PdfChain pdfChain = new PdfChain(mc, signature);
+        PdfChain pdfChain = new PdfChain(blockchainImpl, signature);
 
         jFileChooser = new JPdfFileChooser();
         retVal = jFileChooser.showOpenDialog(this);
-        if(retVal != JFileChooser.APPROVE_OPTION)
+        if (retVal != JFileChooser.APPROVE_OPTION)
             return;
 
         File pdfFile = jFileChooser.getSelectedFile();
@@ -269,15 +247,14 @@ public class ITextBlockchainFrame extends JFrame {
      * VERIFY
      */
 
-    private Action verifyAction()
-    {
+    private Action verifyAction() {
         Icon icon = null;
         try {
             icon = new ImageIcon(ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("img/document_sign.png")));
         } catch (IOException ex) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
         }
-        Action retval = new AbstractAction("verify", icon){
+        Action retval = new AbstractAction("verify", icon) {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -290,24 +267,22 @@ public class ITextBlockchainFrame extends JFrame {
         return retval;
     }
 
-    private void verify()
-    {
+    private void verify() {
 
     }
 
     /**
-     *  QUERY
+     * QUERY
      */
 
-    private Action queryAction()
-    {
+    private Action queryAction() {
         Icon icon = null;
         try {
             icon = new ImageIcon(ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("img/cloud_find.png")));
         } catch (IOException ex) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
         }
-        Action retval = new AbstractAction("query", icon){
+        Action retval = new AbstractAction("query", icon) {
             @Override
             public void actionPerformed(ActionEvent e) {
                 query();
@@ -316,28 +291,21 @@ public class ITextBlockchainFrame extends JFrame {
         return retval;
     }
 
-    private void query()
-    {
+    private void query() {
         BQLQueryDialog dialog = new BQLQueryDialog(this, true);
+        dialog.setTitle("Enter a BQL statement");
         dialog.setVisible(true);
-        String q  =dialog.getQuery();
-        if(q.isEmpty())
+        String q = dialog.getQuery();
+        if (q.isEmpty())
             return;
 
         AbstractBQLOperator operator = null;
         try {
             operator = BQLCompiler.compile(q);
-        }catch(Exception ex){}
+        } catch (Exception ex) {
+        }
 
-        IBlockChain mc = new MultiChain(
-                "http://127.0.0.1",
-                4352,
-                "chain1",
-                "stream1",
-                "multichainrpc",
-                "BHcXLKwR218R883P6pjiWdBffdMx398im4R8BEwfAxMm");
-
-        BQLExecutor exe = new BQLExecutor(mc);
+        BQLExecutor exe = new BQLExecutor(blockchainImpl);
         Collection<Record> records = exe.execute(operator);
         resultsTable.setModel(new JBlockchainTableModel().setData(records));
     }
