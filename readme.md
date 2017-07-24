@@ -85,6 +85,7 @@ In particular the getting started guide at https://www.multichain.com/getting-st
 ## example(s)
 
 putting a document on the blockchain
+
 ```java
 	// define a multichain instance
 	IBlockChain mc = new MultiChain(
@@ -108,6 +109,7 @@ putting a document on the blockchain
 ```
 
 retrieving document information from the blockchain
+
 ```java
 	IBlockChain mc = new MultiChain(
                 "http://127.0.0.1",
@@ -130,6 +132,7 @@ retrieving document information from the blockchain
 ```
 
 This yields following example output:
+
 ```java
 blocktime                        : 1499691151
 id2                              : �Ʊ��B�}ә`�-o�R
@@ -176,6 +179,7 @@ complex queries on items stored in a blockchain
 ```
 
 building complex queries (using a statement)
+
 ```java
 	IBlockChain mc = new MultiChain(
                 "http://127.0.0.1",
