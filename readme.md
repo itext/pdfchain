@@ -206,6 +206,49 @@ We've also provided a small UI that showcases some of the more common  usecases
 
 ![Figure 1: Entering a BQL query through the user interface](bql_example.png)
 
+## BNF for BQL
+
+````
+<variable> 			::= [a-zA-Z0-9]+
+<string>			::= '[a-zA-Z0-9]+'
+<number>			::= ([0-9]*\.)*[0-9]+
+<comma>				::= ,
+
+<array_content>		::= <variable>
+<array_content>		::= <variable> <array_content>
+<array>				::= [ <array_content> ]
+
+<operator>			::= <and> | <or>
+					::= <equal> | <greater> | <greater_or_equal> | <not_equal> | <smaller> | <smaller_or_equal>
+					::= <starts_with> | <ends_with>
+					::= <star>
+					::= <sort>
+					::= <select>
+				
+<and>				::= <operator> AND <operator>
+<or>				::= <operator> OR <operator>
+
+<equal>				::= <variable> == <number>
+					::= <variable> == <string>
+
+<not_equal>			::= <variable> != <number>
+					::= <variable> != <string>
+					
+<greater>			::= <variable> > <number>
+<greater_or_equal>	::= <variable> >= <number>
+<smaller>			::= <variable> < <number>
+<smaller_or_equal>	::= <variable> <= <number>
+
+<starts_with>		::= <variable> STARTS_WITH <string>
+<ends_with>			::= <variable> ENDS_WITH <string>
+
+<star>				::= \*
+
+<sort>				::= <operator> SORT <variable>
+
+<select>			::= SELECT <array> <operator>
+````
+
 ## how can you extend upon it?
 
 There are two important ways in which you can contribute to or extend this component:
