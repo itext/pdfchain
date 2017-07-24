@@ -208,7 +208,7 @@ We've also provided a small UI that showcases some of the more common  usecases
 
 ## BNF for BQL
 
-````
+```
 <variable> 			::= [a-zA-Z0-9]+
 <string>			::= '[a-zA-Z0-9]+'
 <number>			::= ([0-9]*\.)*[0-9]+
@@ -247,7 +247,7 @@ We've also provided a small UI that showcases some of the more common  usecases
 <sort>				::= <operator> SORT <variable>
 
 <select>			::= SELECT <array> <operator>
-````
+```
 
 ## how can you extend upon it?
 
