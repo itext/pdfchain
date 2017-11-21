@@ -47,7 +47,11 @@ Being able to swap the hashing algorithm (in case of hashing algorithms becoming
 The interfaces we impose on blockchain implementations are minimal, yet they provide us with the needed abstraction to enable us to build complex applications and workflows on top of them.
 We abstract a blockchain as a multimap, allowing end-users to store an object (represented by Record, which is `HashMap<String, Object>`) and tying it to a key (String).
 
-![Figure 0: Type Hierarchy](type_hierarchy.png)
+![Figure 0: Class Diagram 01](class_diagram_1.png)
+
+Let's have a more in depth look at just the layer between blockchain and PDF technology
+
+![Figure 0: Class Diagram 02](class_diagram_2.png)
 
 ```java
 public interface IBlockChain {
