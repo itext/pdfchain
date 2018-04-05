@@ -1,4 +1,4 @@
-﻿## pdfChain : blockchain for the masses
+## pdfChain : (experimental) blockchain for the masses
 
 
 ## what is a blockchain?
