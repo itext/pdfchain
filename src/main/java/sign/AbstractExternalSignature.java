@@ -18,36 +18,36 @@ public abstract class AbstractExternalSignature {
     /**
      * Get the hashing algorithm
      *
-     * @return
+     * @return a String representing the hashing algorithm being used for this signature
      */
     public abstract String getHashAlgorithm();
 
     /**
      * Get the encryption algorithm
      *
-     * @return
+     * @return a String representing the hashing algorithm being used for this signature
      */
     public abstract String getEncryptionAlgorithm();
 
     /**
      * Get the private key
      *
-     * @return
+     * @return the private key
      */
     public abstract Key getPrivateKey();
 
     /**
      * Get the public key
      *
-     * @return
+     * @return the public key
      */
     public abstract Key getPublicKey();
 
     /**
      * Calculate the unsigned hash for a given pdf file
      *
-     * @param pdfFile
-     * @return
+     * @param pdfFile the input PDF (file)
+     * @return the hash of the input PDF
      */
     public byte[] hash(InputStream pdfFile) {
         try {
@@ -62,10 +62,10 @@ public abstract class AbstractExternalSignature {
     /**
      * Calculate the the signed hash for a given pdf file
      *
-     * @param pdfFile
-     * @return
-     * @throws GeneralSecurityException
-     * @throws IOException
+     * @param pdfFile the input PDF file
+     * @return an encrypted hash for the input PDF file
+     * @throws GeneralSecurityException if the signature could not be generated
+     * @throws IOException if the file could not be read, or is not a valid PDF document
      */
     public byte[] encryptHash(InputStream pdfFile) throws GeneralSecurityException, IOException {
         Key privKey = getPrivateKey();

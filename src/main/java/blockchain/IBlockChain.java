@@ -12,6 +12,7 @@ public interface IBlockChain {
      *
      * @param key  the key being used to put the data on the blockchain
      * @param data the data being put on the blockchain
+     * @return true iff the data was put successfully on the blockchain
      */
     public boolean put(String key, Record data);
 
@@ -19,14 +20,14 @@ public interface IBlockChain {
      * Get data from the blockchain
      *
      * @param key the key being queried
-     * @return
+     * @return a List of records that match the given key
      */
     public List<Record> get(String key);
 
     /**
      * Get all data from the blockchain
      *
-     * @return
+     * @return a List of all records on the blockchain
      */
     public List<Record> all();
 }

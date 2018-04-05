@@ -10,7 +10,7 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 
 /**
- * @author Joris Schellekens
+ *
  */
 public class JPdfFileChooser extends JFileChooser {
 

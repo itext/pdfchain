@@ -6,7 +6,7 @@ import javax.swing.table.DefaultTableModel;
 import java.util.*;
 
 /**
- * Created by Joris Schellekens on 7/18/2017.
+ *
  */
 public class JBlockchainTableModel extends DefaultTableModel {
 

@@ -13,8 +13,8 @@ import java.util.Stack;
 public class ShuntingYard {
 
     /**
-     * @param infix
-     * @return
+     * @param infix List of infix tokens
+     * @return List of postfix tokens
      */
     public static List<BQLTokenizer.Token> postfix(List<BQLTokenizer.Token> infix) {
         Map<Integer, Integer> matchingBrackets = BQLBracketMatcher.matchingBrackets(infix);
@@ -90,8 +90,8 @@ public class ShuntingYard {
      * Get the precedence of a certain operator
      * Precedence dictates what gets executed first in ambiguous statements such as "A + B * C"
      *
-     * @param token
-     * @return
+     * @param token input token
+     * @return precedence of the token
      */
     private static int precedence(BQLTokenizer.Token token) {
         String[] operators = {  // high level
@@ -124,8 +124,8 @@ public class ShuntingYard {
      * Associativity helps structuring statements such as "A - B - C - D"
      * which can be interpreted as either "(((A - B) - C) - D)" or "(A - (B - (C - D)))"
      *
-     * @param token
-     * @return
+     * @param token input token
+     * @return true iff the token is a left associative operator
      */
     private static boolean isLeftAssociative(BQLTokenizer.Token token) {
         return true;

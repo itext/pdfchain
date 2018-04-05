@@ -5,7 +5,7 @@ import javax.swing.filechooser.FileFilter;
 import java.io.File;
 
 /**
- * Created by Joris Schellekens on 7/18/2017.
+ *
  */
 public class JKeystoreFileChooser extends JFileChooser {
     public JKeystoreFileChooser() {

@@ -52,8 +52,8 @@ public class PdfChain {
      *
      * @param pdfFile the pdf file to be put on the blockchain
      * @return true iff the data was successfully put on the blockchain
-     * @throws IOException
-     * @throws GeneralSecurityException
+     * @throws IOException if the file could not be read, or is not a valid PDF document
+     * @throws GeneralSecurityException if the signature could not be generated
      */
     public boolean put(File pdfFile) throws IOException, GeneralSecurityException {
         return put(new FileInputStream(pdfFile), new HashMap<String, String>());
@@ -64,8 +64,8 @@ public class PdfChain {
      *
      * @param pdfFile the pdf file to be put on the blockchain
      * @return true iff the data was successfully put on the blockchain
-     * @throws IOException
-     * @throws GeneralSecurityException
+     * @throws IOException if the file could not be read, or is not a valid PDF document
+     * @throws GeneralSecurityException if the signature could not be generated
      */
     public boolean put(InputStream pdfFile) throws IOException, GeneralSecurityException {
         return put(pdfFile, new HashMap<String, String>());
@@ -74,9 +74,9 @@ public class PdfChain {
     /**
      * Get all information related to a specific PDF File from the blockchain
      *
-     * @param pdfFile
-     * @return
-     * @throws IOException
+     * @param pdfFile the input file
+     * @return a List of records related to the given File
+     * @throws IOException if the file could not be read or is not a valid PDF document
      */
     public List<Record> get(File pdfFile) throws IOException {
         return get(new FileInputStream(pdfFile));
@@ -86,7 +86,7 @@ public class PdfChain {
      * Get all information related to a specific PDF File from the blockchain
      *
      * @param pdfFile the file being queried
-     * @return
+     * @return a List of records related to the given File
      */
     public List<Record> get(InputStream pdfFile) throws IOException {
 
@@ -108,7 +108,7 @@ public class PdfChain {
      * Get all information related to a specific PDF document from the blockchain
      *
      * @param id1 the first ID of the PDF document
-     * @return
+     * @return a List of records related to the given ID
      */
     public List<Record> get(String id1) {
         return blockChain.get(id1);
@@ -120,8 +120,8 @@ public class PdfChain {
      * @param pdfFile   the pdf file being put on the blockchain
      * @param extraData extra attributes being added on the blockchain
      * @return true iff the data was successfully added to the blockchain
-     * @throws IOException
-     * @throws GeneralSecurityException
+     * @throws IOException if the file could not be read, or is not a valid PDF document
+     * @throws GeneralSecurityException if the signature could not be generated
      */
     public boolean put(InputStream pdfFile, Map<String, String> extraData) throws IOException, GeneralSecurityException {
 

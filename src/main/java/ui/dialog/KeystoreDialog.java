@@ -6,12 +6,14 @@
 package ui.dialog;
 
 /**
- * @author Joris Schellekens
+ *
  */
 public class KeystoreDialog extends javax.swing.JDialog {
 
     /**
      * Creates new form KeystoreDialog
+     * @param parent the parent Frame
+     * @param modal true iff the dialog should be a modal dialog
      */
     public KeystoreDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);

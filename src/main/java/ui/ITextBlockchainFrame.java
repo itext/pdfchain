@@ -30,7 +30,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Created by Joris Schellekens on 7/18/2017.
+ *
  */
 public class ITextBlockchainFrame extends JFrame {
 

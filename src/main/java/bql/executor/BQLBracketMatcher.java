@@ -28,10 +28,10 @@ public class BQLBracketMatcher {
     }
 
     /**
-     * Builds Map<Integer, Integer> such that any bracket position can be queried, and the matching bracket position returned
+     * Builds Map&lt;Integer, Integer&gt; such that any bracket position can be queried, and the matching bracket position returned
      *
-     * @param tokens
-     * @return
+     * @param tokens input tokens
+     * @return Map of matching bracket positions
      */
     public static Map<Integer, Integer> matchingBrackets(List<BQLTokenizer.Token> tokens) {
         Map<Integer, Integer> retval = new HashMap<>();

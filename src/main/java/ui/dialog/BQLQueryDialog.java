@@ -6,12 +6,14 @@
 package ui.dialog;
 
 /**
- * @author Joris Schellekens
+ *
  */
 public class BQLQueryDialog extends javax.swing.JDialog {
 
     /**
      * Creates new form BQLQueryDialog
+     * @param parent the parent Frame
+     * @param modal true iff the dialog should be a modal dialog
      */
     public BQLQueryDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);

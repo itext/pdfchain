@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.HashSet;
 
 /**
- * BQL Relational >= operator
+ * BQL Relational &gt;= operator
  */
 public class GreaterOrEqual extends AbstractBQLOperator {
 
