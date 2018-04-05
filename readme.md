@@ -1,5 +1,4 @@
-## pdfChain : (experimental) blockchain for the masses
-
+﻿## pdfChain : (experimental) blockchain for the masses
 
 ## what is a blockchain?
 
@@ -85,6 +84,16 @@ public interface IBlockChain {
 As a proof of concept we have provided an implementation of the interface IBlockchain using JSON-RPC (remote procedure call) and MultiChain.
 If you want to learn more about setting up a blockchain instance with MultiChain, check out their website for more resources.
 In particular the getting started guide at https://www.multichain.com/getting-started/
+
+## prerequisites
+
+Before you are able to run the examples (tests) in the repository, it is assumed that you have successfully set up a local blockchain node.
+The tests use following credentials:
+- IP : http://127.0.0.1
+- port : 4352
+- chain name : "chain1"
+- username : "multichainrpc"
+- password : ""BHcXLKwR218R883P6pjiWdBffdMx398im4R8BEwfAxMm"
 
 ## example(s)
 
