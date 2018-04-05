@@ -21,7 +21,7 @@ public class BQLCompiler {
      * Compiles an expression written in BQL into an AbstractBQLOperator which can then be executed with BQLExecutor
      *
      * @param expression expression to be compiled
-     * @return
+     * @return the root of a tree of BQL operators
      */
     public static AbstractBQLOperator compile(String expression) {
         List<BQLTokenizer.Token> tokens = ShuntingYard.postfix(BQLTokenizer.tokenize(expression));

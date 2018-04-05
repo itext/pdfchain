@@ -87,6 +87,7 @@ public class PdfChain {
      *
      * @param pdfFile the file being queried
      * @return a List of records related to the given File
+     * @throws IOException if the file could not be read or is not a valid PDF document     *
      */
     public List<Record> get(InputStream pdfFile) throws IOException {
 
