@@ -1,6 +1,6 @@
 package sign;
 
-import sun.misc.IOUtils;
+import org.apache.commons.io.IOUtils;
 
 import javax.crypto.Cipher;
 import java.io.*;
@@ -52,7 +52,7 @@ public abstract class AbstractExternalSignature {
     public byte[] hash(InputStream pdfFile) {
         try {
             MessageDigest complete = MessageDigest.getInstance(getHashAlgorithm());
-            return complete.digest(IOUtils.readFully(new BufferedInputStream(pdfFile), 0, false));
+            return complete.digest(IOUtils.toByteArray(new BufferedInputStream(pdfFile)));
         } catch (NoSuchAlgorithmException | IOException e) {
             e.printStackTrace();
         }
