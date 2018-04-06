@@ -5,11 +5,7 @@ import bql.AbstractBQLOperator;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 
-/**
- *
- */
 public class EndsWith extends AbstractBQLOperator {
 
     private String fieldName;

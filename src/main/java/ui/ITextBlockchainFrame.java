@@ -22,25 +22,17 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- */
-public class ITextBlockchainFrame extends JFrame {
+class ITextBlockchainFrame extends JFrame {
 
-
-    private JXTaskPane actionPane;
-    private JXTaskPane signaturePane;
-    private JXTaskPane workflowPane;
     private JTable resultsTable;
 
-    IBlockChain blockchainImpl = new MultiChain(
+    private IBlockChain blockchainImpl = new MultiChain(
             "http://127.0.0.1",
             4352,
             "chain1",
@@ -48,7 +40,7 @@ public class ITextBlockchainFrame extends JFrame {
             "multichainrpc",
             "BHcXLKwR218R883P6pjiWdBffdMx398im4R8BEwfAxMm");
 
-    public ITextBlockchainFrame() {
+    ITextBlockchainFrame() {
         initComponents();
     }
 
@@ -57,7 +49,7 @@ public class ITextBlockchainFrame extends JFrame {
         JXTaskPaneContainer taskPaneContainer = new JXTaskPaneContainer();
 
         // create file taskpane
-        actionPane = new JXTaskPane();
+        JXTaskPane actionPane = new JXTaskPane();
         actionPane.setTitle("File");
         actionPane.add(putFileAction());
         actionPane.add(getFileAction());
@@ -65,14 +57,14 @@ public class ITextBlockchainFrame extends JFrame {
         taskPaneContainer.add(actionPane);
 
         // create signature taskpane
-        signaturePane = new JXTaskPane();
+        JXTaskPane signaturePane = new JXTaskPane();
         signaturePane.setTitle("Signature");
         signaturePane.add(signAction());
         signaturePane.add(verifyAction());
         taskPaneContainer.add(signaturePane);
 
         // create workflow taskpane
-        workflowPane = new JXTaskPane();
+        JXTaskPane workflowPane = new JXTaskPane();
         workflowPane.setTitle("BQL");
         workflowPane.add(queryAction());
         taskPaneContainer.add(workflowPane);
@@ -91,7 +83,6 @@ public class ITextBlockchainFrame extends JFrame {
     /**
      * PUT
      */
-
     private Action putFileAction() {
         Icon icon = null;
         try {
@@ -99,13 +90,12 @@ public class ITextBlockchainFrame extends JFrame {
         } catch (IOException ex) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
         }
-        Action retval = new AbstractAction("put", icon) {
+        return new AbstractAction("put", icon) {
             @Override
             public void actionPerformed(ActionEvent e) {
                 putFile();
             }
         };
-        return retval;
     }
 
     private void putFile() {
@@ -119,9 +109,7 @@ public class ITextBlockchainFrame extends JFrame {
         File pdfFile = jFileChooser.getSelectedFile();
         try {
             pdfChain.put(pdfFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (GeneralSecurityException e) {
+        } catch (IOException | GeneralSecurityException e) {
             e.printStackTrace();
         }
         try {
@@ -135,7 +123,6 @@ public class ITextBlockchainFrame extends JFrame {
     /**
      * GET
      */
-
     private Action getFileAction() {
         Icon icon = null;
         try {
@@ -143,13 +130,12 @@ public class ITextBlockchainFrame extends JFrame {
         } catch (IOException ex) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
         }
-        Action retval = new AbstractAction("get", icon) {
+        return new AbstractAction("get", icon) {
             @Override
             public void actionPerformed(ActionEvent e) {
                 getFile();
             }
         };
-        return retval;
     }
 
     private void getFile() {
@@ -171,7 +157,6 @@ public class ITextBlockchainFrame extends JFrame {
     /**
      * SIGN
      */
-
     private Action signAction() {
         Icon icon = null;
         try {
@@ -179,20 +164,15 @@ public class ITextBlockchainFrame extends JFrame {
         } catch (IOException ex) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
         }
-        Action retval = new AbstractAction("sign", icon) {
+        return new AbstractAction("sign", icon) {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    sign();
-                } catch (FileNotFoundException e1) {
-                    e1.printStackTrace();
-                }
+                sign();
             }
         };
-        return retval;
     }
 
-    private void sign() throws FileNotFoundException {
+    private void sign() {
 
         // open dialog for selecting a keystore
         JFileChooser jFileChooser = new JKeystoreFileChooser();
@@ -208,7 +188,7 @@ public class ITextBlockchainFrame extends JFrame {
             return;
 
         // set up a signature provider
-        DefaultExternalSignature signature = null;
+        DefaultExternalSignature signature;
         try {
             signature = new DefaultExternalSignature(new FileInputStream(jFileChooser.getSelectedFile()), keystoreDialog.getUsername(), keystoreDialog.getPassword());
         } catch (Exception ex) {
@@ -230,9 +210,7 @@ public class ITextBlockchainFrame extends JFrame {
         File pdfFile = jFileChooser.getSelectedFile();
         try {
             pdfChain.put(pdfFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (GeneralSecurityException e) {
+        } catch (IOException | GeneralSecurityException e) {
             e.printStackTrace();
         }
         try {
@@ -246,7 +224,6 @@ public class ITextBlockchainFrame extends JFrame {
     /**
      * VERIFY
      */
-
     private Action verifyAction() {
         Icon icon = null;
         try {
@@ -254,27 +231,21 @@ public class ITextBlockchainFrame extends JFrame {
         } catch (IOException ex) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
         }
-        Action retval = new AbstractAction("verify", icon) {
+        return new AbstractAction("verify", icon) {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    sign();
-                } catch (FileNotFoundException e1) {
-                    e1.printStackTrace();
-                }
+                verify();
             }
         };
-        return retval;
     }
 
     private void verify() {
-
+        sign();
     }
 
     /**
      * QUERY
      */
-
     private Action queryAction() {
         Icon icon = null;
         try {
@@ -282,13 +253,12 @@ public class ITextBlockchainFrame extends JFrame {
         } catch (IOException ex) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
         }
-        Action retval = new AbstractAction("query", icon) {
+        return new AbstractAction("query", icon) {
             @Override
             public void actionPerformed(ActionEvent e) {
                 query();
             }
         };
-        return retval;
     }
 
     private void query() {
@@ -303,6 +273,7 @@ public class ITextBlockchainFrame extends JFrame {
         try {
             operator = BQLCompiler.compile(q);
         } catch (Exception ex) {
+            ex.printStackTrace();
         }
 
         BQLExecutor exe = new BQLExecutor(blockchainImpl);

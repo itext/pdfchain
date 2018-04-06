@@ -3,7 +3,13 @@ package bql.executor;
 import bql.AbstractBQLOperator;
 import bql.logical.And;
 import bql.logical.Or;
-import bql.relational.*;
+import bql.relational.Equal;
+import bql.relational.Greater;
+import bql.relational.GreaterOrEqual;
+import bql.relational.NotEqual;
+import bql.relational.Smaller;
+import bql.relational.SmallerOrEqual;
+import bql.relational.Star;
 import bql.sort.SortBy;
 import bql.string.EndsWith;
 import bql.string.StartsWith;
@@ -27,63 +33,52 @@ public class BQLCompiler {
         List<BQLTokenizer.Token> tokens = ShuntingYard.postfix(BQLTokenizer.tokenize(expression));
 
         Stack<Object> tmp = new Stack<>();
-        for (int i = 0; i < tokens.size(); i++) {
-            BQLTokenizer.Token t = tokens.get(i);
-            if (t.getType() != BQLTokenizer.Type.OPERATOR) {
+        for (BQLTokenizer.Token t : tokens) {
+            if (t.getType() == BQLTokenizer.Type.OPERATOR) {
+                String operator = t.getText().toUpperCase();
+                switch (operator) {
+                    case "*":
+                        tmp.push(buildStarOperator());
+                        break;
+                    case "AND":
+                        tmp.push(buildAnd(tmp));
+                        break;
+                    case "OR":
+                        tmp.push(buildOr(tmp));
+                        break;
+                    case ">":
+                        tmp.push(buildGreater(tmp));
+                        break;
+                    case ">=":
+                        tmp.push(buildGreaterOrEqual(tmp));
+                        break;
+                    case "<":
+                        tmp.push(buildSmaller(tmp));
+                        break;
+                    case "<=":
+                        tmp.push(buildSmallerOrEqual(tmp));
+                        break;
+                    case "==":
+                        tmp.push(buildEquals(tmp));
+                        break;
+                    case "!=":
+                        tmp.push(buildNotEquals(tmp));
+                        break;
+                    case "SORT":
+                        tmp.push(buildSort(tmp));
+                        break;
+                    case "SELECT":
+                        tmp.push(buildSelect(tmp));
+                        break;
+                    case "STARTS_WITH":
+                        tmp.push(buildStartsWith(tmp));
+                        break;
+                    case "ENDS_WITH":
+                        tmp.push(buildEndsWith(tmp));
+                        break;
+                }
+            } else {
                 tmp.push(t);
-                continue;
-            }
-            // STAR
-            if (t.getText().equalsIgnoreCase("*")) {
-                tmp.push(buildStarOperator());
-            }
-            // AND
-            else if (t.getText().equalsIgnoreCase("AND")) {
-                tmp.push(buildAnd(tmp));
-            }
-            // OR
-            else if (t.getText().equalsIgnoreCase("OR")) {
-                tmp.push(buildOr(tmp));
-            }
-            // >
-            else if (t.getText().equalsIgnoreCase(">")) {
-                tmp.push(buildGreater(tmp));
-            }
-            // >=
-            else if (t.getText().equalsIgnoreCase(">=")) {
-                tmp.push(buildGreaterOrEqual(tmp));
-            }
-            // <
-            else if (t.getText().equalsIgnoreCase("<")) {
-                tmp.push(buildSmaller(tmp));
-            }
-            // <=
-            else if (t.getText().equalsIgnoreCase("<=")) {
-                tmp.push(buildSmallerOrEqual(tmp));
-            }
-            // ==
-            else if (t.getText().equalsIgnoreCase("==")) {
-                tmp.push(buildEquals(tmp));
-            }
-            // !=
-            else if (t.getText().equalsIgnoreCase("!=")) {
-                tmp.push(buildNotEquals(tmp));
-            }
-            // SORT
-            else if (t.getText().equalsIgnoreCase("SORT")) {
-                tmp.push(buildSort(tmp));
-            }
-            // SELECT
-            else if (t.getText().equalsIgnoreCase("SELECT")) {
-                tmp.push(buildSelect(tmp));
-            }
-            // STARTS WITH
-            else if (t.getText().equalsIgnoreCase("STARTS_WITH")) {
-                tmp.push(buildStartsWith(tmp));
-            }
-            // ENDS WITH
-            else if (t.getText().equalsIgnoreCase("ENDS_WITH")) {
-                tmp.push(buildEndsWith(tmp));
             }
         }
         if (tmp.size() != 1)

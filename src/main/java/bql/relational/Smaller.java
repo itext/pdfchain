@@ -2,11 +2,9 @@ package bql.relational;
 
 import blockchain.Record;
 import bql.AbstractBQLOperator;
-import bql.IBQLOperator;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 
 /**
  * BQL Relational &lt; operator
@@ -39,6 +37,6 @@ public class Smaller extends AbstractBQLOperator {
     }
 
     private int cmpNumbers(Number n0, Number n1) {
-        return ((Double) n0.doubleValue()).compareTo(n1.doubleValue());
+        return Double.compare(n0.doubleValue(), n1.doubleValue());
     }
 }

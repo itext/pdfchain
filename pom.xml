@@ -37,21 +37,21 @@
         <dependency>
             <artifactId>json</artifactId>
             <groupId>org.json</groupId>
-            <version>20160810</version>
+            <version>20180130</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
-            <version>4.5.2</version>
+            <version>4.5.5</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/com.itextpdf/kernel -->
         <dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>kernel</artifactId>
-            <version>7.0.4</version>
+            <version>7.0.6</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/junit/junit -->
@@ -69,11 +69,11 @@
             <version>1.6.5-1</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-io -->
+        <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
         <dependency>
-            <groupId>org.apache.commons</groupId>
+            <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
-            <version>1.3.2</version>
+            <version>2.6</version>
         </dependency>
 
     </dependencies>

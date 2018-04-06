@@ -1,24 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ui;
 
-import blockchain.IBlockChain;
-import blockchain.MultiChain;
-
-import java.io.File;
-import java.io.IOException;
-import java.security.GeneralSecurityException;
 import javax.swing.*;
 
-import pdfchain.PdfChain;
-import ui.filechooser.JPdfFileChooser;
-
-/**
- *
- */
 public class Main {
 
     public static void main(String[] args) {
@@ -30,7 +13,7 @@ public class Main {
                     break;
                 }
             }
-        } catch (Exception e) {
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException e) {
             // If Nimbus is not available, you can set the GUI to another look and feel.
             System.out.println("Nimbus look and feel is not available on your system.");
         }

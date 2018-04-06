@@ -3,7 +3,9 @@ package sign;
 import org.apache.commons.io.IOUtils;
 
 import javax.crypto.Cipher;
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.security.GeneralSecurityException;
 import java.security.Key;
 import java.security.MessageDigest;
@@ -65,16 +67,16 @@ public abstract class AbstractExternalSignature {
      * @param pdfFile the input PDF file
      * @return an encrypted hash for the input PDF file
      * @throws GeneralSecurityException if the signature could not be generated
-     * @throws IOException if the file could not be read, or is not a valid PDF document
+     * @throws IOException              if the file could not be read, or is not a valid PDF document
      */
     public byte[] encryptHash(InputStream pdfFile) throws GeneralSecurityException, IOException {
         Key privKey = getPrivateKey();
-        if (privKey == null)
+        if (privKey == null) {
             return new byte[]{};
+        }
         Cipher cipher = Cipher.getInstance(getEncryptionAlgorithm());
         cipher.init(Cipher.ENCRYPT_MODE, privKey);
-        byte[] cipherData = cipher.doFinal(hash(pdfFile));
-        return cipherData;
+        return cipher.doFinal(hash(pdfFile));
     }
 
 }

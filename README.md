@@ -1,6 +1,6 @@
-﻿## pdfChain : (experimental) blockchain for the masses
+﻿# pdfChain: (experimental) blockchain for the masses
 
-## what is a blockchain?
+## What is a blockchain?
 
 A blockchain is a distributed database that is used to maintain a continuously growing list of records, called blocks. 
 Each block contains a timestamp and a link to a previous block. 
@@ -10,7 +10,7 @@ Once recorded, the data in any given block cannot be altered retroactively witho
 Functionally, a blockchain can serve as "an open, distributed ledger that can record transactions between two parties efficiently and in a verifiable and permanent way. 
 The ledger itself can also be programmed to trigger transactions automatically."
 
-## why should you use it?
+## Why should you use it?
 
 A blockchain supersedes older technology that deals with authentication and non-repudiation.
 First, there are many ways you can sign a document.
@@ -39,18 +39,18 @@ The default iText implementation of the blockchain concept is specifically geare
 This allows you not only to store hash values of documents, but also to digitally sign them.
 Being able to swap the hashing algorithm (in case of hashing algorithms becoming outdated) enables LTV (long term validation).
 
-## what does iText provide?
+## What does iText provide?
 
-### interfaces that hide implementation details
+### Interfaces that hide implementation details
 
 The interfaces we impose on blockchain implementations are minimal, yet they provide us with the needed abstraction to enable us to build complex applications and workflows on top of them.
-We abstract a blockchain as a multimap, allowing end-users to store an object (represented by Record, which is `HashMap<String, Object>`) and tying it to a key (String).
+We abstract a blockchain as a multimap, allowing end-users to store an object (represented by Record, which is `HashMap<String, Object>`) and tying it to a key (`String`).
 
-![Figure 0: Class Diagram 01](class_diagram_1.png)
+![Figure 0: Class Diagram 01](img/class_diagram_1.png)
 
 Let's have a more in depth look at just the layer between blockchain and PDF technology
 
-![Figure 0: Class Diagram 02](class_diagram_2.png)
+![Figure 0: Class Diagram 02](img/class_diagram_2.png)
 
 ```java
 public interface IBlockChain {
@@ -79,25 +79,26 @@ public interface IBlockChain {
 }
 ```
 
-### concrete implementation using JSON-RPC and MultiChain
+### Concrete implementation using JSON-RPC and MultiChain
 
 As a proof of concept we have provided an implementation of the interface IBlockchain using JSON-RPC (remote procedure call) and MultiChain.
-If you want to learn more about setting up a blockchain instance with MultiChain, check out their website for more resources.
-In particular the getting started guide at https://www.multichain.com/getting-started/
+If you want to learn more about setting up a blockchain instance with MultiChain, check out their website for more resources,
+in particular the [getting started guide](https://www.multichain.com/getting-started/).
 
-## prerequisites
+## Prerequisites
 
 Before you are able to run the examples (tests) in the repository, it is assumed that you have successfully set up a local blockchain node.
 The tests use following credentials:
-- IP : http://127.0.0.1
-- port : 4352
-- chain name : "chain1"
-- username : "multichainrpc"
-- password : ""BHcXLKwR218R883P6pjiWdBffdMx398im4R8BEwfAxMm"
 
-## example(s)
+- IP: `http://127.0.0.1`
+- port: `4352`
+- chain name: `chain1`
+- username: `multichainrpc`
+- password: `BHcXLKwR218R883P6pjiWdBffdMx398im4R8BEwfAxMm`
 
-putting a document on the blockchain
+## Example(s)
+
+### Putting a document on the blockchain
 
 ```java
 	// define a multichain instance
@@ -121,7 +122,7 @@ putting a document on the blockchain
 	blockchain.put(inputFile);
 ```
 
-retrieving document information from the blockchain
+### Retrieving document information from the blockchain
 
 ```java
 	IBlockChain mc = new MultiChain(
@@ -158,7 +159,7 @@ key                              : ï¿½ï¿½Bï¿½ï¿½ï¿½ï¿½ï¿½
 shsh                             : <garbled>
 ```
 
-complex queries on items stored in a blockchain
+### Complex queries on items stored in a blockchain
 
 ```java
 	/* build query
@@ -191,7 +192,7 @@ complex queries on items stored in a blockchain
 	Collection<Record> resultSet = exe.execute(op);
 ```
 
-building complex queries (using a statement)
+### Building complex queries (using a statement)
 
 ```java
 	IBlockChain mc = new MultiChain(
@@ -213,15 +214,15 @@ building complex queries (using a statement)
 	Assert.assertFalse(resultSet.isEmpty());
 ```
 
-verifying a signature
+### Verifying a signature
 ```java
 ```
 
-## user interface
+## User interface
 
 We've also provided a small UI that showcases some of the more common  usecases
 
-![Figure 1: Entering a BQL query through the user interface](bql_example.png)
+![Figure 1: Entering a BQL query through the user interface](img/bql_example.png)
 
 ## BNF for BQL
 
@@ -266,12 +267,12 @@ We've also provided a small UI that showcases some of the more common  usecases
 <select>			::= SELECT <array> <operator>
 ```
 
-## how can you extend upon it?
+## How can you extend upon it?
 
 There are two important ways in which you can contribute to or extend this component:
  - implement IBlockChain for some other blockchain provider (e.g. HyperLedger)
  - implement another signing/hashing algorithm combination (current default is RSA / SHA-256)
 
-## conclusion
+## Conclusion
 
-learn more at itextpdf.com
+Learn more at [itextpdf.com](https://itextpdf.com).

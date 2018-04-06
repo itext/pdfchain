@@ -8,7 +8,7 @@ import java.util.Stack;
 /**
  * This class handles bracket related logic for BQL
  */
-public class BQLBracketMatcher {
+class BQLBracketMatcher {
 
     /**
      * Test whether two tokens are matching brackets
@@ -33,7 +33,7 @@ public class BQLBracketMatcher {
      * @param tokens input tokens
      * @return Map of matching bracket positions
      */
-    public static Map<Integer, Integer> matchingBrackets(List<BQLTokenizer.Token> tokens) {
+    static Map<Integer, Integer> matchingBrackets(List<BQLTokenizer.Token> tokens) {
         Map<Integer, Integer> retval = new HashMap<>();
         Stack<Object> tmp = new Stack<>();
         for (int i = 0; i < tokens.size(); i++) {

@@ -14,7 +14,7 @@ public abstract class AbstractBQLOperator implements IBQLOperator {
     private AbstractBQLOperator parent = null;
     private List<AbstractBQLOperator> children = new ArrayList<>();
 
-    public AbstractBQLOperator addChild(AbstractBQLOperator op) {
+    protected AbstractBQLOperator addChild(AbstractBQLOperator op) {
         AbstractBQLOperator prevParent = op.parent;
         if (prevParent != null)
             prevParent.children.remove(op);
@@ -23,7 +23,7 @@ public abstract class AbstractBQLOperator implements IBQLOperator {
         return this;
     }
 
-    public AbstractBQLOperator getChild(int index) {
+    protected AbstractBQLOperator getChild(int index) {
         return (index < children.size() && index >= 0) ? children.get(index) : null;
     }
 

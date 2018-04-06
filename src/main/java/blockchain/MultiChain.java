@@ -8,11 +8,15 @@ import org.apache.commons.httpclient.UsernamePasswordCredentials;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.StringRequestEntity;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.css.Rect;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 /**
  * Implementation of IBlockChain using MultiChain
@@ -20,14 +24,14 @@ import java.util.*;
 public class MultiChain implements IBlockChain {
 
     // blockchain information
-    private String host = "";
-    private int port = 0;
-    private String chainName = "";
-    private String streamName = "";
+    private String host;
+    private int port;
+    private String chainName;
+    private String streamName;
 
     // credentials
-    private String username = "";
-    private String password = "";
+    private String username;
+    private String password;
 
     // random (for generating a random ID)
     private static final Random rnd = new Random(System.currentTimeMillis());
@@ -113,12 +117,13 @@ public class MultiChain implements IBlockChain {
                     Record data = new Record(new JSONObject(dataBytes).toMap());
                     Map<String, Object> objectMap = resultObj.toMap();
                     for (String objectDataKey : objectMap.keySet()) {
-                        if (objectDataKey.equals("data"))
-                            continue;
-                        data.put(objectDataKey, objectMap.get(objectDataKey));
+                        if (!objectDataKey.equals("data")) {
+                            data.put(objectDataKey, objectMap.get(objectDataKey));
+                        }
                     }
                     retval.add(data);
-                } catch (Exception ex) {
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
             }
             return retval;
@@ -132,14 +137,14 @@ public class MultiChain implements IBlockChain {
 
     private static String generateRandomID(int len) {
         String chars = "abcdefghijklmnopqrstuvwxyz123456";
-        String retval = "";
+        StringBuilder retval = new StringBuilder();
         while (retval.length() < len) {
-            retval += chars.charAt(rnd.nextInt(chars.length()));
+            retval.append(chars.charAt(rnd.nextInt(chars.length())));
         }
-        return retval;
+        return retval.toString();
     }
 
-    public JSONObject postJSON(Map<String, Object> data) throws IOException {
+    private JSONObject postJSON(Map<String, Object> data) throws IOException {
 
         // request id
         String id = generateRandomID(32);

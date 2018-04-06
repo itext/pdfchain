@@ -3,13 +3,15 @@ package bql.executor;
 import blockchain.IBlockChain;
 import blockchain.Record;
 import bql.AbstractBQLOperator;
-import bql.IBQLOperator;
 import bql.logical.And;
 import bql.relational.EqualID;
 import bql.sort.SortBy;
 import bql.transform.Select;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Stack;
 
 /**
  * BQLExecutor for BQL
@@ -32,7 +34,7 @@ public class BQLExecutor {
 
     private List<AbstractBQLOperator> leaves(AbstractBQLOperator root) {
         List<AbstractBQLOperator> out = new ArrayList<>();
-        Stack<AbstractBQLOperator> operatorStack = new Stack();
+        Stack<AbstractBQLOperator> operatorStack = new Stack<>();
         operatorStack.push(root);
         while (!operatorStack.isEmpty()) {
             AbstractBQLOperator op = operatorStack.pop();

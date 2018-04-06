@@ -2,11 +2,9 @@ package bql.relational;
 
 import blockchain.Record;
 import bql.AbstractBQLOperator;
-import bql.IBQLOperator;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 
 /**
  * BQL Relational != operator

@@ -10,13 +10,13 @@ import java.util.Stack;
  * A Shunting Yard algorithm will take an expression in infix notation and convert it to postfix.
  * Postfix is a lot easier to process for building abstract syntax trees.
  */
-public class ShuntingYard {
+class ShuntingYard {
 
     /**
      * @param infix List of infix tokens
      * @return List of postfix tokens
      */
-    public static List<BQLTokenizer.Token> postfix(List<BQLTokenizer.Token> infix) {
+    static List<BQLTokenizer.Token> postfix(List<BQLTokenizer.Token> infix) {
         Map<Integer, Integer> matchingBrackets = BQLBracketMatcher.matchingBrackets(infix);
         Stack<BQLTokenizer.Token> stk = new Stack<>();
         List<BQLTokenizer.Token> output = new ArrayList<>();
@@ -33,15 +33,14 @@ public class ShuntingYard {
                 continue;
             }
 
-            // if the token is an operator (o1) then:
+            // if the token is an operator then:
             if (t.getType() == BQLTokenizer.Type.OPERATOR) {
-                BQLTokenizer.Token o1 = t;
                 while (!stk.isEmpty() && stk.peek().getType() == BQLTokenizer.Type.OPERATOR
-                        && ((isLeftAssociative(o1) && precedence(o1) <= precedence(stk.peek()))
-                        || (!isLeftAssociative(o1) && precedence(o1) < precedence(stk.peek())))) {
+                        && ((isLeftAssociative(t) && precedence(t) <= precedence(stk.peek()))
+                        || (!isLeftAssociative(t) && precedence(t) < precedence(stk.peek())))) {
                     output.add(stk.pop());
                 }
-                stk.push(o1);
+                stk.push(t);
                 continue;
             }
 
@@ -73,7 +72,6 @@ public class ShuntingYard {
                 if (!stk.isEmpty() && stk.peek().getType() == BQLTokenizer.Type.LEFT_BRACKET) {
                     stk.pop();
                 }
-                continue;
             }
         }
         while (!stk.isEmpty()) {
@@ -82,7 +80,6 @@ public class ShuntingYard {
                 throw new IllegalArgumentException("Mismatched parenthesis in expression");
             output.add(t);
         }
-        // return
         return output;
     }
 

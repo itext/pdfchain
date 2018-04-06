@@ -4,7 +4,9 @@ import blockchain.Record;
 import bql.AbstractBQLOperator;
 import bql.IBQLOperator;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * BQL Logical OR operator

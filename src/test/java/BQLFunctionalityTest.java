@@ -1,7 +1,3 @@
-/**
- * Created by Joris Schellekens on 7/11/2017.
- */
-
 import blockchain.IBlockChain;
 import blockchain.MultiChain;
 import blockchain.Record;
@@ -15,7 +11,6 @@ import bql.relational.Greater;
 import bql.relational.Smaller;
 import bql.sort.SortBy;
 import bql.transform.Select;
-import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -23,6 +18,8 @@ import org.junit.experimental.categories.Category;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Collection;
+
+import static org.junit.Assert.assertFalse;
 
 @Category(IntegrationTest.class)
 public class BQLFunctionalityTest {
@@ -59,7 +56,7 @@ public class BQLFunctionalityTest {
 
         // execute query
         boolean isEmpty = exe.execute(op).isEmpty();
-        Assert.assertFalse(isEmpty);
+        assertFalse(isEmpty);
     }
 
     @Test
@@ -80,6 +77,6 @@ public class BQLFunctionalityTest {
 
         // execute query
         Collection<Record> resultSet = exe.execute(op);
-        Assert.assertFalse(resultSet.isEmpty());
+        assertFalse(resultSet.isEmpty());
     }
 }

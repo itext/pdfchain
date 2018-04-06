@@ -1,7 +1,12 @@
 package sign;
 
-import java.io.*;
-import java.security.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.security.Key;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 
 /**
@@ -50,8 +55,8 @@ public class DefaultExternalSignature extends AbstractExternalSignature {
             return ks.getCertificate(alias).getPublicKey();
         } catch (KeyStoreException e) {
             e.printStackTrace();
-            return null;
         }
+        return null;
     }
 
 }

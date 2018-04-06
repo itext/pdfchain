@@ -30,8 +30,7 @@ public class SortBy extends AbstractBQLOperator {
 
     @Override
     public Collection<Record> apply(Collection<Record> in) {
-        List<Record> out = new ArrayList<>();
-        out.addAll(getChild(0).apply(in));
+        List<Record> out = new ArrayList<>(getChild(0).apply(in));
 
         java.util.Collections.sort(out, new Comparator<Record>() {
             @Override

@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * (greedy) Tokenizer for BQL
  */
-public class BQLTokenizer {
+class BQLTokenizer {
 
     public enum Type {
         ARRAY,
@@ -24,25 +24,25 @@ public class BQLTokenizer {
         private String[] text;
         private Type type;
 
-        public Token(String[] text) {
+        Token(String[] text) {
             this.text = text;
             this.type = Type.ARRAY;
         }
 
-        public Token(String text, Type type) {
+        Token(String text, Type type) {
             this.text = new String[]{text};
             this.type = type;
         }
 
-        public String getText() {
+        String getText() {
             return text[0];
         }
 
-        public String[] getTexts() {
+        String[] getTexts() {
             return text;
         }
 
-        public Type getType() {
+        Type getType() {
             return type;
         }
 
@@ -51,7 +51,7 @@ public class BQLTokenizer {
         }
     }
 
-    public static List<Token> tokenize(String input) {
+    static List<Token> tokenize(String input) {
         List<Token> tokens = new ArrayList<>();
         int p = 0;
         while (p < input.length()) {
@@ -64,7 +64,7 @@ public class BQLTokenizer {
         return tokens;
     }
 
-    public static Token next(String input, int offset) {
+    private static Token next(String input, int offset) {
         int[] nextPos = {nextKeyword(input, offset),
                 nextNumber(input, offset),
                 nextWhitespace(input, offset),
@@ -89,7 +89,7 @@ public class BQLTokenizer {
         return new Token(input.substring(offset, max), type);
     }
 
-    public static int nextVariable(String input, int offset) {
+    private static int nextVariable(String input, int offset) {
         int p = offset;
         while (p < input.length()) {
             char c = input.charAt(p);
@@ -100,7 +100,7 @@ public class BQLTokenizer {
         return p;
     }
 
-    public static int nextString(String input, int offset) {
+    private static int nextString(String input, int offset) {
         if (input.charAt(offset) != '\'')
             return offset;
         int p = offset + 1;
@@ -109,39 +109,39 @@ public class BQLTokenizer {
         return input.charAt(p) == '\'' ? (p + 1) : offset;
     }
 
-    public static int nextComma(String input, int offset) {
+    private static int nextComma(String input, int offset) {
         char c = input.charAt(offset);
         if (c == ',')
             return offset + 1;
         return offset;
     }
 
-    public static int nextLeftBracket(String input, int offset) {
+    private static int nextLeftBracket(String input, int offset) {
         char c = input.charAt(offset);
         if (c == '(' || c == '[' || c == '{')
             return offset + 1;
         return offset;
     }
 
-    public static int nextRightBracket(String input, int offset) {
+    private static int nextRightBracket(String input, int offset) {
         char c = input.charAt(offset);
         if (c == ')' || c == ']' || c == '}')
             return offset + 1;
         return offset;
     }
 
-    public static int nextKeyword(String input, int offset) {
+    private static int nextKeyword(String input, int offset) {
         input = input.toUpperCase();
         String[] operators = {"!=", "*", "<", "<=", "==", ">", ">=", "AND", "ENDS_WITH", "OR", "SELECT", "SORT", "STARTS_WITH", "WHERE"};
         int maxPos = offset;
-        for (int i = 0; i < operators.length; i++) {
-            int endPos = input.startsWith(operators[i], offset) ? (offset + operators[i].length()) : offset;
-            maxPos = java.lang.Math.max(maxPos, endPos);
+        for (String operator : operators) {
+            int endPos = input.startsWith(operator, offset) ? (offset + operator.length()) : offset;
+            maxPos = Math.max(maxPos, endPos);
         }
         return maxPos;
     }
 
-    public static int nextNumber(String input, int offset) {
+    private static int nextNumber(String input, int offset) {
         int p = offset;
         while (p < input.length() && (Character.isDigit(input.charAt(p)) || input.charAt(p) == '.'))
             p++;
@@ -149,12 +149,12 @@ public class BQLTokenizer {
         try {
             Double.parseDouble(subs);
             return p;
-        } catch (Exception ex) {
+        } catch (NumberFormatException ex) {
             return offset;
         }
     }
 
-    public static int nextWhitespace(String input, int offset) {
+    private static int nextWhitespace(String input, int offset) {
         int p = offset;
         while (p < input.length() && (Character.isWhitespace(input.charAt(p)) || input.charAt(p) == '\n'))
             p++;

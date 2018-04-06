@@ -4,9 +4,6 @@ import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import java.io.File;
 
-/**
- *
- */
 public class JKeystoreFileChooser extends JFileChooser {
     public JKeystoreFileChooser() {
         setCurrentDirectory(new File(System.getProperty("user.home")));

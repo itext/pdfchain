@@ -3,18 +3,18 @@ package ui.model;
 import blockchain.Record;
 
 import javax.swing.table.DefaultTableModel;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-/**
- *
- */
 public class JBlockchainTableModel extends DefaultTableModel {
 
     private List<Record> records = new ArrayList<>();
     private List<String> columns = new ArrayList<>();
 
     public JBlockchainTableModel() {
-
     }
 
     public JBlockchainTableModel setData(Collection<Record> records) {

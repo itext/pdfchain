@@ -5,7 +5,6 @@ import bql.AbstractBQLOperator;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 
 /**
  * BQL Relational == operator (specifically for ID)

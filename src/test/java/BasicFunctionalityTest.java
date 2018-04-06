@@ -1,11 +1,5 @@
-/**
- * Created by Joris Schellekens on 7/11/2017.
- */
-
 import blockchain.IBlockChain;
 import blockchain.MultiChain;
-import com.itextpdf.kernel.xmp.XMPException;
-import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -13,11 +7,12 @@ import pdfchain.PdfChain;
 import sign.AbstractExternalSignature;
 import sign.DefaultExternalSignature;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.GeneralSecurityException;
-import java.util.Map;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 @Category(IntegrationTest.class)
 public class BasicFunctionalityTest {
@@ -45,10 +40,10 @@ public class BasicFunctionalityTest {
 
         // put a document on the chain
         boolean wasAdded = chain.put(inputFileStream);
-        Assert.assertTrue(wasAdded);
+        assertTrue(wasAdded);
 
         // check whether the chain now contains this value
         boolean isEmpty = chain.get("z�L{�Wd=��\u007F\u0010��G�").isEmpty();
-        Assert.assertFalse(isEmpty);
+        assertFalse(isEmpty);
     }
 }

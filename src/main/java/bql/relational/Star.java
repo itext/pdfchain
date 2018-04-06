@@ -5,9 +5,6 @@ import bql.AbstractBQLOperator;
 
 import java.util.Collection;
 
-/**
- *
- */
 public class Star extends AbstractBQLOperator {
 
     @Override

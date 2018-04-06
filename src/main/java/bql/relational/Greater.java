@@ -5,7 +5,6 @@ import bql.AbstractBQLOperator;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 
 /**
  * BQL Relational &gt; operator
@@ -38,6 +37,6 @@ public class Greater extends AbstractBQLOperator {
     }
 
     private int cmpNumbers(Number n0, Number n1) {
-        return ((Double) n0.doubleValue()).compareTo(n1.doubleValue());
+        return Double.compare(n0.doubleValue(), n1.doubleValue());
     }
 }
