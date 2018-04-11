@@ -275,4 +275,4 @@ There are two important ways in which you can contribute to or extend this compo
 
 ## Conclusion
 
-Learn more at [itextpdf.com](https://itextpdf.com).
+Learn more at [itextpdf.com/blockchain](https://itextpdf.com/blockchain).
