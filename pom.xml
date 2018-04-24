@@ -9,6 +9,7 @@
     <version>1.0.0-SNAPSHOT</version>
 
     <properties>
+        <itext.version>7.0.7</itext.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -51,7 +52,7 @@
         <dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>kernel</artifactId>
-            <version>7.0.6</version>
+            <version>${itext.version}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/junit/junit -->
