@@ -51,7 +51,6 @@ import com.itextpdf.kernel.pdf.PdfName;
 import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.pdfchain.sign.AbstractExternalSignature;
 import com.itextpdf.pdfchain.sign.NoOpSignature;
-import com.sun.javafx.css.StyleCacheEntry;
 
 import javax.crypto.Cipher;
 import java.io.File;
@@ -209,6 +208,8 @@ public class PdfChain {
      * @return true iff the record was signed by the public key, false otherwise
      */
     public boolean isSigned(Record r, Key key){
+        if(r == null || key == null)
+            return false;
         if(!r.containsKey("shsh"))
             return false;
         if(!r.containsKey("sgnalgo"))
