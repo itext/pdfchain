@@ -216,6 +216,11 @@ shsh                             : <garbled>
 
 ### Verifying a signature
 ```java
+        // check signature
+        for(Record r : chain.get("z�L{�Wd=��\u007F\u0010��G�")){
+            if(chain.isSigned(r, sgn.getPublicKey()))
+                System.out.println("This record is signed");
+        }
 ```
 
 ## User interface
