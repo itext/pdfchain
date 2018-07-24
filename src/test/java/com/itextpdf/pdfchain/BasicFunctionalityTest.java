@@ -42,6 +42,7 @@ package com.itextpdf.pdfchain;/*
  */
 import com.itextpdf.pdfchain.blockchain.IBlockChain;
 import com.itextpdf.pdfchain.blockchain.MultiChain;
+import com.itextpdf.pdfchain.blockchain.Record;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -64,14 +65,14 @@ public class BasicFunctionalityTest {
     }
 
     @Test
-    public void putOnChainTest() throws IOException, GeneralSecurityException {
+    public void putOnChainTest() throws Exception {
         IBlockChain mc = new MultiChain(
                 "http://127.0.0.1",
-                4352,
-                "chain1",
-                "stream1",
+                9740,
+                "chain-dev",
+                "stream-dev",
                 "multichainrpc",
-                "BHcXLKwR218R883P6pjiWdBffdMx398im4R8BEwfAxMm");
+                "TVnqseBcHsYjeTU1ACVmF75nCviRJ9UmLdubGApjtsD");
 
         InputStream keystoreInputStream = BasicFunctionalityTest.class.getClassLoader().getResourceAsStream("ks");
         InputStream inputFileStream = BasicFunctionalityTest.class.getClassLoader().getResourceAsStream("input.pdf");
@@ -87,5 +88,12 @@ public class BasicFunctionalityTest {
         // check whether the chain now contains this value
         boolean isEmpty = chain.get("z�L{�Wd=��\u007F\u0010��G�").isEmpty();
         assertFalse(isEmpty);
+
+        // check signature
+        for(Record r : chain.get("z�L{�Wd=��\u007F\u0010��G�")){
+            if(chain.isSigned(r, sgn.getPublicKey()))
+                System.out.println("This record is signed");
+        }
+
     }
 }

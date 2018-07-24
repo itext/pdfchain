@@ -42,6 +42,7 @@
  */
 package com.itextpdf.pdfchain.sign;
 
+import com.itextpdf.kernel.xmp.impl.Base64;
 import org.apache.commons.io.IOUtils;
 
 import javax.crypto.Cipher;
@@ -104,7 +105,7 @@ public abstract class AbstractExternalSignature {
     }
 
     /**
-     * Calculate the the signed hash for a given pdf file
+     * Calculate the signed hash for a given pdf file
      *
      * @param pdfFile the input PDF file
      * @return an encrypted hash for the input PDF file
@@ -118,7 +119,21 @@ public abstract class AbstractExternalSignature {
         }
         Cipher cipher = Cipher.getInstance(getEncryptionAlgorithm());
         cipher.init(Cipher.ENCRYPT_MODE, privKey);
-        return cipher.doFinal(hash(pdfFile));
+
+        return Base64.encode(cipher.doFinal(hash(pdfFile)));
     }
 
+    /**
+     * Calculate the signed hash for a given pdf file
+     * @param encrypted
+     * @return
+     * @throws Exception
+     */
+    public byte[] decryptHash(byte[] encrypted) throws Exception {
+        Key pubKey = getPublicKey();
+        Cipher cipher = Cipher.getInstance(getEncryptionAlgorithm());
+        cipher.init(Cipher.DECRYPT_MODE, pubKey);
+        // return
+        return cipher.doFinal(Base64.decode(encrypted));
+    }
 }

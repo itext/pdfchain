@@ -42,6 +42,7 @@
  */
 package com.itextpdf.pdfchain.pdfchain;
 
+import com.itextpdf.kernel.xmp.impl.Base64;
 import com.itextpdf.pdfchain.blockchain.IBlockChain;
 import com.itextpdf.pdfchain.blockchain.Record;
 import com.itextpdf.kernel.pdf.PdfArray;
@@ -50,12 +51,15 @@ import com.itextpdf.kernel.pdf.PdfName;
 import com.itextpdf.kernel.pdf.PdfReader;
 import com.itextpdf.pdfchain.sign.AbstractExternalSignature;
 import com.itextpdf.pdfchain.sign.NoOpSignature;
+import com.sun.javafx.css.StyleCacheEntry;
 
+import javax.crypto.Cipher;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.GeneralSecurityException;
+import java.security.Key;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -198,4 +202,40 @@ public class PdfChain {
         return blockChain.put(id1, dataOnChain);
     }
 
+    /**
+     * Check whether a given record is signed by a given public key
+     * @param r the record to check
+     * @param key the public key to check against
+     * @return true iff the record was signed by the public key, false otherwise
+     */
+    public boolean isSigned(Record r, Key key){
+        if(!r.containsKey("shsh"))
+            return false;
+        if(!r.containsKey("sgnalgo"))
+            return false;
+        if(!r.containsKey("hsh"))
+            return false;
+        try {
+            String alg = r.get("sgnalgo").toString();
+            byte[] enc = r.get("shsh").toString().getBytes();
+            byte[] dec = decryptHash(enc, key, alg);
+            return r.get("hsh").toString().equals(new String(dec));
+        }catch (Exception ex){}
+        return false;
+    }
+
+    /**
+     * decrypt the signed hash for a given pdf file
+     * @param encrypted the encrypted hash
+     * @param pubKey the public key to verify against
+     * @param encryptionAlgorithm  the encryption algorithm to undo
+     * @return
+     * @throws Exception
+     */
+    private byte[] decryptHash(byte[] encrypted, Key pubKey, String encryptionAlgorithm) throws Exception {
+        Cipher cipher = Cipher.getInstance(encryptionAlgorithm);
+        cipher.init(Cipher.DECRYPT_MODE, pubKey);
+        // return
+        return cipher.doFinal(Base64.decode(encrypted));
+    }
 }
