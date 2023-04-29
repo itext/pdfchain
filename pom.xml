@@ -39,7 +39,7 @@
         <dependency>
             <artifactId>json</artifactId>
             <groupId>org.json</groupId>
-            <version>20180130</version>
+            <version>20230227</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
